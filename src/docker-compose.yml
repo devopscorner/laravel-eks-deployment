@@ -69,7 +69,8 @@ services:
       - "${PORT_PHPFPM:-8000}:80"
     volumes:
       #- /etc/localtime:/etc/localtime:ro   ## Do not use it in mac
-      - /var/run/docker.sock:/var/run/docker.sock
+      #- /var/run/docker.sock:/var/run/docker.sock
+      - ${PHPFPM_TOOLS:-./phpfpm}:/tmp/phpfpm
     environment:
       - TZ="Asia/Jakarta"
       - PHP_VERSION=${PHP_VERSION:-7.4}
@@ -78,7 +79,7 @@ services:
       - APP_DEBUG=true
       - DB_PORT=3306
       - DB_HOST=mariadb
-      - DB_DATABASE=${MARIADB_DATABASE:-laravel_db}
+      - DB_DATABASE=${MARIADB_DATABASE:-laravel_dev}
       - DB_USERNAME=${MARIADB_USER:-laravel_user}
       - DB_PASSWORD=${MARIADB_PASSWORD:-secretpassword}
     privileged: true
@@ -114,7 +115,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-secretpassword}
       - MYSQL_ROOT_HOST=${MARIADB_ROOT_HOST:-127.0.0.1}
       - MYSQL_HOST=${MARIADB_HOST:-127.0.0.1}
-      - MYSQL_DATABASE=${MARIADB_DATABASE:-laravel_db}
+      - MYSQL_DATABASE=${MARIADB_DATABASE:-laravel_dev}
       - MYSQL_USER=${MARIADB_USER:-laravel_user}
       - MYSQL_PASSWORD=${MARIADB_PASSWORD:-secretpassword}
       #- SKIP_INNODB=1
