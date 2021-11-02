@@ -1,0 +1,21 @@
+php:
+  repository: "zeroc0d3/laravel-kubernetes"
+  tag: "latest"
+  fpmEnabled: false
+  envVars:
+    - name: APP_ENV
+      value: production
+    - name: APP_DEBUG
+      value: false
+    - name: DB_PORT
+      value: 3306
+    - name: DB_HOST
+      value: laravel-mariadb.laravel-app.svc.cluster.local
+
+service:
+  type: ClusterIP
+  HTTPPort: 80
+
+ingress:
+  enabled: true
+  domain: develop.devopscorner.online
