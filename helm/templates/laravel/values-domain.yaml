@@ -35,4 +35,4 @@ nodeSelector:
 
 ingress:
   enabled: true
-  domain: develop.devopscorner.online
+  domain: devopscorner.online

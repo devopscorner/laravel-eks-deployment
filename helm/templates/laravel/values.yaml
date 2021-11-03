@@ -22,11 +22,3 @@ nodeSelector:
   enabled: true
   select:
     node: "laravel"
-
-ingress:
-  enabled: false
-  annotations: {}
-  hosts:
-    - host: ""
-      paths: []
-  tls: []

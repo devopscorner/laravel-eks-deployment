@@ -13,3 +13,20 @@
 - Added Laravel Container
 - Added HelmChart NGINX
 - Added HelmChart Laravel
+
+## Version 0.2.1
+
+- Update laravel blade welcome template & docker-compose configuration
+- Added cheatsheet maintenance database
+- Added ignore files & folders
+
+## Version 0.2.2
+
+- Refactoring helm template for secret & secret-prod
+- Update docker-compose configuration for added Adminer (Database Administrator) tools
+- Update docker ignore files
+
+## Version 0.2.3
+
+- Added Letsencrypt SSL configuration
+- Update notes Step Deployment
