@@ -15,6 +15,12 @@ networks:
 # VOLUME SETUP
 #================================================================================================
 volumes:
+  vol_adminer:
+    driver: ${VOLUMES_DRIVER:-local}
+    driver_opts:
+      o: bind
+      type: none
+      device: ${SESSION_ADMINER:-/opt/data/docker/session/adminer}
   vol_portainer:
     driver: ${VOLUMES_DRIVER:-local}
     driver_opts:
@@ -35,6 +41,27 @@ volumes:
       device: ${DATA_UBUNTU:-/opt/data/docker/phpfpm}
 
 services:
+#================================================================================================
+# ADMINER
+#================================================================================================
+  adminer:
+    image: dockerframework/adminer:${ADMINER_VERSION:-4.8.1}
+    container_name: ${CONTAINER_ADMINER:-zeroc0d3_adminer}
+    restart: unless-stopped
+    ports:
+      - "${PORT_ADMINER:-5210}:8080"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - vol_adminer:/sessions
+    environment:
+      - TZ="Asia/Jakarta"
+      - ADMINER_VERSION=${ADMINER_VERSION:-4.8.1}
+      - INSTALL_MSSQL=${INSTALL_MSSQL:-false}
+    privileged: true
+    networks:
+      zeroc0d3_net:
+        ipv4_address: ${CONTAINER_IP_ADMINER:-172.144.144.3}
+
 #================================================================================================
 # PORTAINER
 #================================================================================================
@@ -77,8 +104,8 @@ services:
       - APP_KEY="base64:KvkVVCKALENqUruV8z6Lf85poviBolKzDxS+swRxxDk="
       - APP_ENV=local
       - APP_DEBUG=true
-      - DB_PORT=3306
-      - DB_HOST=mariadb
+      - DB_PORT=${MARIADB_PORT:-3306}
+      - DB_HOST=${MARIADB_HOST:-mariadb}
       - DB_DATABASE=${MARIADB_DATABASE:-laravel_dev}
       - DB_USERNAME=${MARIADB_USER:-laravel_user}
       - DB_PASSWORD=${MARIADB_PASSWORD:-secretpassword}
