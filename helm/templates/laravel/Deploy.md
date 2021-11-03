@@ -17,5 +17,5 @@
 
 - Helm Upgrade
   ```
-  helm upgrade laravel-kubernetes -f values-update-db.yaml -f helm/secrets.yaml stable/lamp -n laravel-app
+  helm upgrade laravel-kubernetes -f values.yaml -f helm/secrets-prod.yaml stable/lamp -n laravel-app
   ```

@@ -11,6 +11,16 @@ php:
     - name: DB_PORT
       value: 3306
 
+service:
+  type: ClusterIP
+  HTTPPort: 80
+
+  ports:
+  - name: laravel-svcaccount
+    port: 80
+    protocol: TCP
+    targetPort: 32150
+
 autoscaling:
   enabled: true
   minReplicas: 1
@@ -24,9 +34,5 @@ nodeSelector:
     node: "laravel"
 
 ingress:
-  enabled: false
-  annotations: {}
-  hosts:
-    - host: ""
-      paths: []
-  tls: []
+  enabled: true
+  domain: develop.devopscorner.online

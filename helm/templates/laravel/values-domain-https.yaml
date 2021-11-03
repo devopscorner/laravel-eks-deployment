@@ -1,0 +1,65 @@
+php:
+  repository: zeroc0d3/laravel-kubernetes
+  pullPolicy: IfNotPresent
+  tag: "latest"
+  fpmEnabled: false
+  envVars:
+    - name: APP_ENV
+      value: production
+    - name: APP_DEBUG
+      value: false
+    - name: DB_PORT
+      value: 3306
+
+image:
+  repository: zeroc0d3/laravel-kubernetes
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  enabled: true
+  type: LoadBalancer
+  ports:
+    - name: laravel-svcaccount
+      port: 80
+      protocol: TCP
+      targetPort: 32150
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector:
+  enabled: true
+  select:
+    node: "laravel"
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/group.name: laravel
+    alb.ingress.kubernetes.io/certificate-arn: YOUR_ARN_CERT
+    alb.ingress.kubernetes.io/subnets:
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-1-2017-01
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/tags: Department=DEVOPS,Environment=DEV,Service=ALB,DepartmentGroup=DEV-DEVOPS,ResourceGroup=PROD-ALB-DEVOPSCORNER,Name=ALB-DEVOPSCORNER-EKS-1.19
+  domain: "develop.devopscorner.online"
+  rules:
+    - path: /
+      backend:
+        serviceName: laravel-svc
+        servicePort: 80
+    - path: /*
+      backend:
+        serviceName: laravel-svc
+        servicePort: 8080
+  tls: []
