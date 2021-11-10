@@ -846,8 +846,11 @@ spec:
     spec:
       containers:
         - args:
-            - --cluster-name=devopscorner_poc
+          #############################
+          ### Modified Cluster Name ###
+            - --cluster-name=devopscorner_staging
             - --ingress-class=alb
+          #############################
           image: amazon/aws-alb-ingress-controller:v2.2.0
           livenessProbe:
             failureThreshold: 2
