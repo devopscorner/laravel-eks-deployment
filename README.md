@@ -1,5 +1,13 @@
 # Infra Laravel Deployment
 
+![all contributors](https://img.shields.io/github/contributors/devopscorner/laravel-eks-deployment)
+![tags](https://img.shields.io/github/v/tag/devopscorner/laravel-eks-deployment?sort=semver)
+![issues](https://img.shields.io/github/issues/devopscorner/laravel-eks-deployment)
+![pull requests](https://img.shields.io/github/issues-pr/devopscorner/laravel-eks-deployment)
+![forks](https://img.shields.io/github/forks/devopscorner/laravel-eks-deployment)
+![stars](https://img.shields.io/github/stars/devopscorner/laravel-eks-deployment)
+[![License: CC BY-NC 4.0](https://img.shields.io/github/license/devopscorner/laravel-eks-deployment)](https://img.shields.io/github/license/devopscorner/laravel-eks-deployment)
+
 Laravel Kubernetes (EKS) Deployment Tools
 
 ## Prerequirements
