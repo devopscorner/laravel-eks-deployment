@@ -92,7 +92,7 @@ AWS Services, eg:
 - Clone this repository
 
   ```
-  git clone git@gitlab.com:zeroc0d3lab-devops/infra-laravel-deployment.git
+  git clone git@github.com:devopscorner/laravel-eks-deployment.git
   ```
 
 - Pull Submodule repository
