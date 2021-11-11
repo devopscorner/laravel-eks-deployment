@@ -1,6 +1,13 @@
 ---
 replicaCount: 1
 
+secret:
+  enabled: true
+  data:
+    .dockerconfigjson: ""
+    username: ""
+    password: ""
+
 configMap:
   enabled: true
   name: "config-api"
