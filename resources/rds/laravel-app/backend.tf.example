@@ -1,0 +1,21 @@
+# ==========================================================================
+#  Resources: RDS laravel-app / backend.tf (Storing tfstate)
+# --------------------------------------------------------------------------
+#  Description
+# --------------------------------------------------------------------------
+#    - S3 Bucket Path
+#    - DynamoDB Table
+# ==========================================================================
+
+# --------------------------------------------------------------------------
+#  Store Path for Terraform State
+# --------------------------------------------------------------------------
+terraform {
+  backend "s3" {
+    encrypt        = true
+    bucket         = "devopscorner-tf-remote-state"
+    dynamodb_table = "devopscorner-tf-state-lock"
+    key            = "devopscorner-dev/resources/rds/laravel-app/terraform.tfstate"
+    region         = "ap-southeast-1"
+  }
+}

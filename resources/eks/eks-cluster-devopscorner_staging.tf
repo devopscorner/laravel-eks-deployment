@@ -20,10 +20,10 @@ resource "aws_eks_cluster" "aws_eks" {
   }
 
   tags = merge(
-    var.core_tags,
+    var.dev_tags,
     {
-      "k8s.io/cluster-autoscaler/${lookup(var.core_tags, "Environment")}" = "owned",
-      "k8s.io/cluster-autoscaler/enabled"                                 = "TRUE"
+      "k8s.io/cluster-autoscaler/${lookup(var.dev_tags, "Environment")}" = "owned",
+      "k8s.io/cluster-autoscaler/enabled"                                = "TRUE"
     },
   )
 }
@@ -40,11 +40,10 @@ resource "aws_iam_openid_connect_provider" "cluster" {
 #   name              = "/aws/eks/${aws_eks_cluster.aws_eks.id}/cluster"
 #   retention_in_days = 7
 
-#   tags = {
-#     Name            = "devopscorner_staging"
-#     Department      = "DEVOPS"
-#     Environment     = "DEV"
-#     DepartmentGroup = "DEV-DEVOPS"
-#     ResourceGroup   = "DEV-CWL-STAGING"
-#   }
+#   tags = merge(
+#     var.dev_tags,
+#     {
+#       "Name" = "CloudWatch-EKS-devopscorner_staging"
+#     },
+#   )
 # }

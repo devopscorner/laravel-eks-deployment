@@ -12,9 +12,17 @@ VER="2.0"                               # script version
 
 SUBMODULE_TERRAFORM="terraform-aws-alb \
     terraform-aws-autoscaling \
+    terraform-aws-cloudfront \
+    terraform-aws-cloudwatch \
+    terraform-aws-dynamodb-table \
+    terraform-aws-ec2-instance \
+    terraform-aws-ecs \
     terraform-aws-eks \
     terraform-aws-elb \
     terraform-aws-iam \
+    terraform-aws-lambda \
+    terraform-aws-key-pair \
+    terraform-aws-s3-object \
     terraform-aws-rds \
     terraform-aws-route53 \
     terraform-aws-s3-bucket \

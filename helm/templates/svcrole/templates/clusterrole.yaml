@@ -1,0 +1,15 @@
+{{- if .Values.clusterrole.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Values.serviceAccount.namespace }}-micro-registry
+rules:
+  - apiGroups:
+    - ""
+    resources:
+      - pods
+    verbs:
+      - list
+      - patch
+      - watch
+{{- end }}

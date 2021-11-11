@@ -6,13 +6,24 @@
 #    - Input Variable for AWS Provider
 # ==========================================================================
 
-variable "core_tags" {
+variable "dev_tags" {
   type = map(string)
   default = {
     Environment     = "DEV"
-    Name            = "EKS-STAGING"
+    Name            = "EKS-1.21-STAGING-DEV"
     Department      = "DEVOPS"
     DepartmentGroup = "DEV-DEVOPS"
-    ResourceGroup   = "DEV-EKS-STAGING"
+    ResourceGroup   = "DEV-EKS-DEVOPSCORNER"
+  }
+}
+
+variable "uat_tags" {
+  type = map(string)
+  default = {
+    Environment     = "UAT"
+    Name            = "EKS-1.21-STAGING-UAT"
+    Department      = "DEVOPS"
+    DepartmentGroup = "UAT-DEVOPS"
+    ResourceGroup   = "UAT-EKS-DEVOPSCORNER"
   }
 }

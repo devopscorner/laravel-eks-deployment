@@ -1,0 +1,9 @@
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "laravel-app-account"
+  namespace: laravel-app
+
+clusterrole:
+  create: false
+  name: micro-registry

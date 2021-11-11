@@ -80,6 +80,8 @@ sub-official:
 	@echo " Task      : Get Official Submodules "
 	@echo " Date/Time : `date`"
 	@echo "============================================"
+	@mkdir -p modules
+	@touch .gitmodules
 	@./get-official.sh
 	@echo '- DONE -'
 
@@ -88,6 +90,8 @@ sub-community:
 	@echo " Task      : Get Community Submodules "
 	@echo " Date/Time : `date`"
 	@echo "============================================"
+	@mkdir -p modules
+	@touch .gitmodules
 	@./get-community.sh
 	@echo '- DONE -'
 

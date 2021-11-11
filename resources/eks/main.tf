@@ -12,14 +12,14 @@
 #  VPN Staging for Remote Access
 # --------------------------------------------------------------------------
 # locals{
-#   vpn_sgid = "sg-[YOUR_SECURITY_GROUP_ID]"
+#   vpn_sgid = "sg-YOUR_SECURITY_GROUP_ID"
 # }
 
 # --------------------------------------------------------------------------
 #  Data Sources
 # --------------------------------------------------------------------------
 data "aws_vpc" "devopscorner_vpc" {
-  id = "vpc-[YOUR_VPC_ID]"
+  id = "vpc-YOUR_VPC_ID"
 }
 
 ### Moved to module.vpc ###

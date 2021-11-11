@@ -13,9 +13,9 @@
 terraform {
   backend "s3" {
     encrypt        = true
-    bucket         = "devopscorner-poc-tf-remote-state"
-    dynamodb_table = "devopscorner-poc-tf-state-lock"
-    key            = "devopscorner-poc-dev/core/terraform.tfstate"
+    bucket         = "devopscorner-tf-remote-state"
+    dynamodb_table = "devopscorner-tf-state-lock"
+    key            = "devopscorner-dev/core/terraform.tfstate"
     region         = "ap-southeast-1"
   }
 }

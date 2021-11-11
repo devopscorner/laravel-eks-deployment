@@ -30,3 +30,16 @@
 
 - Added Letsencrypt SSL configuration
 - Update notes Step Deployment
+
+## Version 0.2.4
+
+- Refactoring manifest setup
+- Refactoring EKS resources with VPC module
+- Refactoring path S3 bucket
+
+## Version 0.2.5
+
+- Refactoring Helm Template & Values
+- Refresh Submodules Terraform Official & Terraform Community
+- Fixing Makefile script for submodules
+- Added modules RDS

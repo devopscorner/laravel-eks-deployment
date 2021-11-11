@@ -1,0 +1,28 @@
+repositories:
+  - name: devopscorner-staging
+    url: s3://devopscorner-helm-chart-staging/charts
+
+releases:
+  - name: laravel-app-api
+    namespace: laravel-app
+    chart: devopscorner-staging/api
+    values:
+    - ./api/api.yaml
+
+  - name: laravel-app-backend
+    namespace: laravel-app
+    chart: devopscorner-staging/backend
+    values:
+    - ./backend/backend.yaml
+
+  - name: laravel-app-frontend
+    namespace: laravel-app
+    chart: devopscorner-staging/frontend
+    values:
+    - ./frontend/frontend.yaml
+
+  - name: laravel-app-account
+    namespace: laravel-app
+    chart: devopscorner-staging/svcrole
+    values:
+    - ./svcrole/account.yaml

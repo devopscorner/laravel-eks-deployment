@@ -1,0 +1,113 @@
+---
+replicaCount: 1
+
+configMap:
+  enabled: true
+  name: "config-frontend"
+  mountPath: /app/core/config
+  readOnly: true
+  data:
+    .app.config.json : |-
+        {
+           "AppName": "Frontend Helm Template",
+           "GRPCTimeout": 10,
+           "CacheExpiry": 300,
+           "CacheCleanup": 600,
+           "DefaultPageLimit": 3,
+           "ClientTimeout": 10
+        }
+
+image:
+  repository: [ECR_PATH]/devopscorner/helm-frontend
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: "laravel-app-frontend"
+  namespace: "laravel-app"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+container:
+  port: 8080
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-headers: '*'
+    nginx.ingress.kubernetes.io/cors-allow-methods: '*'
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: frontend.internal.service
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend.internal.service
+          servicePort: 80
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - frontend.internal.service
+
+application:
+  enabled: true
+  env:
+    - name: ALLOWED_ORIGINS
+      value: '*'
+    - name: PORT
+      value: "8080"
+    - name: REFRESH_TOKEN_EXPIRE_HOUR
+      value: "48"
+    - name: TOKEN_EXPIRE_HOUR
+      value: "1"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 64Mi
+  requests:
+    cpu: 100m
+    memory: 32Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector:
+  enabled: false
+  select:
+    node: "laravel-app"
+
+tolerations: []
+
+affinity: {}

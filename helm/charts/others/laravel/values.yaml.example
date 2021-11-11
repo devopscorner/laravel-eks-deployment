@@ -1,0 +1,13 @@
+php:
+  repository: "your_docker_hub_username/laravel-kubernetes"
+  tag: "latest"
+  fpmEnabled: false
+  envVars:
+    - name: APP_ENV
+      value: production
+    - name: APP_DEBUG
+      value: false
+    - name: DB_PORT
+      value: 3306
+    - name: DB_HOST
+      value: localhost

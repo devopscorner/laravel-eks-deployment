@@ -15,12 +15,12 @@ module "vpc" {
   enable_dns_support        = true
   map_public_ip_on_launch   = true
   enable_dhcp_options       = true
-  dhcp_options_domain_name         = "internal.service"
+  dhcp_options_domain_name         = "internal.service"      ## (default: *.svc.cluster.local)
   dhcp_options_domain_name_servers = ["AmazonProvidedDNS"]
 
   tags = merge(
-    var.core_tags,
-    { "kubernetes.io/cluster/${lookup(var.core_tags, "Environment")}" = "shared" }
+    var.dev_tags,
+    { "kubernetes.io/cluster/${lookup(var.dev_tags, "Environment")}" = "shared" }
   )
 
   public_subnet_tags = {
