@@ -13,6 +13,13 @@
 - Upgrade EKS version 1.22 from 1.19
 - Added New Helm Template Global
 - Added New Helm Values using `helmfile`
+- Added Documentation for Laravel Terraform
+  - Plan
+  - Cost Review (`infracost`)
+  - Security Analysis
+    - `checkov`
+    - `terrascan`
+    - `tfsec`
 
 ## Version 0.2.5
 

@@ -22,7 +22,11 @@ Laravel Kubernetes (EKS) Deployment Tools
 
 ## Folder Structure
 
-### **Compose**
+### **docs**
+
+Index Documentation, see [here](docs/README.md) for detail
+
+### **compose**
 
 Docker Compose for Build Image, eg:
 
@@ -31,36 +35,54 @@ Docker Compose for Build Image, eg:
 - PHPFpm (Laravel App)
 - _etc_
 
-### **Helm**
+### **helm**
 
-HelmChart for Stateful & Others:
+HelmChart, Template, Helmfile Values:
 
-- Stateful
-  - MariaDB
-  - MySQL
-  - PostgreSQL
-  - Redis
-  - _etc_
-- Others
-  - Fluentd
-  - Grafana
-  - Jenkins
-  - Kibana
-  - NGINX
-  - PHPFpm
-  - _etc_
+- charts
+  - stateful
+    - mariadb
+    - mysql
+    - postgresql
+    - redis
+    - _etc_
+  - others
+    - fluentd
+    - grafana
+    - jenkins
+    - kibana
+    - nginx
+    - phpfpm
+    - _etc_
+- helmfile
+  - laravel-template.yml
+  - laravel-values.yml
+  - manifest-laravel-secret.yml
+  - mariadb-values.yml
+- templates
+  - api
+  - backend
+  - configmap
+  - frontend
+  - secretref
+  - stateful
+  - svcrole
+  - helm-pack-lab.sh
+  - helm-push-lab.sh
 
-### **Resources**
 
-AWS Services, eg:
+### **terraform/environment**
 
-- EC2
-- EKS
-- RDS
-- S3
-- _etc_
+Teraform AWS Providers, eg:
 
-### **Modules (Terraform Submodules)**
+- Core
+- TFState
+- Resources
+  - Budget
+  - EKS
+  - RDS
+
+### **terraform/modules (Terraform Submodules)**
 
 - Official Repositories
 
