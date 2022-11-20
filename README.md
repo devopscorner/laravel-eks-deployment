@@ -31,15 +31,6 @@ Docker Compose for Build Image, eg:
 - PHPFpm (Laravel App)
 - _etc_
 
-### **Core**
-
-Infra Services (Network), eg:
-
-- IGW
-- NAT
-- VPC
-- _etc_
-
 ### **Helm**
 
 HelmChart for Stateful & Others:
