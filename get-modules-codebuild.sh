@@ -1,18 +1,21 @@
 #!/usr/bin/env sh
 # -----------------------------------------------------------------------------
-#  Get Community Terraform Submodules
+#  Get Terraform Submodules (Inside CodeBuild)
 # -----------------------------------------------------------------------------
 #  Author     : DevOps Engineer (support@devopscorner.id)
 #  License    : Apache v2
 # -----------------------------------------------------------------------------
 set -e
 
-TITLE="TERRAFORM COMMUNITY SUBMODULES" # script name
+TITLE="TERRAFORM SUBMODULES"           # script name
 VER="2.3"                              # script version
 
-PATH_FOLDER=$(pwd)
-SUBMODULE_TERRAFORM="${PATH_FOLDER}/module_community.lst"
-PATH_MODULES="${PATH_FOLDER}/terraform/modules/providers/aws/community"
+PATH_CODEBUILD="${CODEBUILD_SRC_DIR}"
+SUBMODULE_TERRAFORM_COMMUNITY="${CODEBUILD_SRC_DIR}/module_community.lst"
+SUBMODULE_TERRAFORM_OFFICIALS="${CODEBUILD_SRC_DIR}/module_officials.lst"
+PATH_MODULES="${PATH_CODEBUILD}/terraform/modules/providers/aws"
+PATH_MODULES_COMMUNITY="${PATH_MODULES}/community"
+PATH_MODULES_OFFICIALS="${PATH_MODULES}/officials"
 
 COL_RED="\033[22;31m"
 COL_GREEN="\033[22;32m"
@@ -73,12 +76,35 @@ skip_exists() {
   fi
 }
 
-submodule_terrafom() {
+submodule_cleanup(){
+  print_line2
+  get_time
+  echo "$COL_BLUE[ $DATE ] ##### Rebuild Submodule(s): $COL_END"
+
+  cd ${PATH_CODEBUILD}
+  rm -rf modules
+
+  mkdir -p ${PATH_MODULES_COMMUNITY}
+  mkdir -p ${PATH_MODULES_OFFICIALS}
+  echo '- REBUILD DONE -'
+}
+
+submodule_terrafom_community() {
   print_line2
   get_time
   echo "$COL_BLUE[ $DATE ] ##### Download Community Submodule(s): $COL_END"
+  submodule_download $PATH_MODULES_COMMUNITY $SUBMODULE_TERRAFORM_COMMUNITY
+}
 
-  cd $PATH_MODULES
+submodule_terrafom_officials() {
+  print_line2
+  get_time
+  echo "$COL_BLUE[ $DATE ] ##### Download Officials Submodule(s): $COL_END"
+  submodule_download $PATH_MODULES_OFFICIALS $SUBMODULE_TERRAFORM_OFFICIALS
+}
+
+submodule_download() {
+  cd $1
   while IFS= read line; do
     get_time
     print_line2
@@ -87,13 +113,15 @@ submodule_terrafom() {
     # skip_exists $line
     git clone --depth 1 $line
     echo ""
-  done <"$SUBMODULE_TERRAFORM"
+  done <"$2"
   echo '- DOWNLOAD DONE -'
 }
 
 main() {
   header
-  submodule_terrafom
+  submodule_cleanup
+  submodule_terrafom_community
+  submodule_terrafom_officials
   footer
 }
 

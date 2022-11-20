@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 # -----------------------------------------------------------------------------
-#  Get Community Terraform Submodules
+#  Get Official Terraform Submodules
 # -----------------------------------------------------------------------------
-#  Author     : DevOps Engineer (support@devopscorner.id)
+#  Author     : DevOps Engineer DevOpsCornerId (support@devopscorner.id)
 #  License    : Apache v2
 # -----------------------------------------------------------------------------
 set -e
 
-TITLE="TERRAFORM COMMUNITY SUBMODULES" # script name
+TITLE="TERRAFORM OFFICIAL SUBMODULES" # script name
 VER="2.3"                              # script version
 
 PATH_FOLDER=$(pwd)
-SUBMODULE_TERRAFORM="${PATH_FOLDER}/module_community.lst"
-PATH_MODULES="${PATH_FOLDER}/terraform/modules/providers/aws/community"
+SUBMODULE_TERRAFORM="${PATH_FOLDER}/module_officials.lst"
+PATH_MODULES="${PATH_FOLDER}/terraform/modules/providers/aws/officials"
 
 COL_RED="\033[22;31m"
 COL_GREEN="\033[22;32m"
@@ -76,7 +76,7 @@ skip_exists() {
 submodule_terrafom() {
   print_line2
   get_time
-  echo "$COL_BLUE[ $DATE ] ##### Download Community Submodule(s): $COL_END"
+  echo "$COL_BLUE[ $DATE ] ##### Download Official Submodule(s): $COL_END"
 
   cd $PATH_MODULES
   while IFS= read line; do
@@ -88,7 +88,7 @@ submodule_terrafom() {
     git clone --depth 1 $line
     echo ""
   done <"$SUBMODULE_TERRAFORM"
-  echo '- DOWNLOAD DONE -'
+  echo "- DOWNLOAD DONE -"
 }
 
 main() {
