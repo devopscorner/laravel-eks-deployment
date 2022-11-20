@@ -2,14 +2,16 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "api.fullname" . }}
+  namespace: {{ .Values.serviceAccount.namespace }}
   labels:
     {{- include "api.labels" . | nindent 4 }}
 spec:
+  {{- if .Values.service }}
   type: {{ .Values.service.type }}
+  {{- with .Values.service.ports }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
   selector:
     {{- include "api.selectorLabels" . | nindent 4 }}

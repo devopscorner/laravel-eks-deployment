@@ -1,0 +1,36 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ template "stateful.fullname" . }}
+  namespace: {{ .Values.serviceAccount.namespace }}
+{{- with .Values.persistence.annotations  }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  labels:
+    app: {{ template "stateful.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  {{- if .Values.persistence.capacity }}
+  capacity:
+    storage: {{ .Values.persistence.capacity | quote }}
+  {{- end }}
+  {{- if .Values.persistence.volumeMode }}
+  volumeMode: {{ .Values.persistence.volumeMode | quote }}
+  {{- end }}
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  {{- if .Values.persistence.persistentVolumeReclaimPolicy }}
+  persistentVolumeReclaimPolicy: {{ .Values.persistence.persistentVolumeReclaimPolicy | quote }}
+  {{- end }}
+{{- if .Values.persistence.storageClass }}
+{{- if (eq "-" .Values.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

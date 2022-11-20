@@ -1,0 +1,16 @@
+secret:
+  enabled: true
+  name: psql-cred
+  mountPath: /app/core/secret
+  subPath: {}
+  readOnly: true
+  data:
+    db-user: dXNlcm5hbWUK
+    db-pass: cGFzc3cwcmQK
+    db-host: MTI3LjAuMC4xCg==
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: "devopscorner"
+  namespace: "devopscorner-dev"

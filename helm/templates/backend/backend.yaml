@@ -5,11 +5,12 @@
 replicaCount: 1
 
 secret:
-  enabled: true
-  data:
-    .dockerconfigjson: ""
-    username: ""
-    password: ""
+  enabled: false
+  name: "secret-backend"
+  mountPath: {}
+  subPath: {}
+  readOnly: true
+  data: {}
 
 configMap:
   enabled: true
@@ -28,10 +29,10 @@ configMap:
         }
 
 image:
-  repository: nginx
+  repository: devopscorner/cicd:alpine
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,7 +40,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -61,54 +62,27 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  enabled: false
   type: ClusterIP
-  port: 80
-  targetPort: 80
-
-container:
-  port: 8080
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
 
 ingress:
   enabled: false
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: backend.internal.service
-      paths:
-      - path: /
-        backend:
-          serviceName: backend.internal.service
-          servicePort: 80
+    - host: ""
+      paths: []
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - backend.internal.service
 
 application:
   enabled: true
   env:
-    - name: DB_HOST
-      value: db.internal.service
-    - name: DB_PORT
-      value: "5432"
-    - name: DB_USER
-      value: postgres
-    - name: DB_NAME
-      value: db_name
-    - name: DB_PASS
-      valueFrom:
-        secretKeyRef:
-          key: db-pass
-          name: db-secret
-    - name: DB_TIMEOUT
-      value: "10"
-    - name: DB_IDLE_CONN
-      value: "2"
-    - name: DB_OPEN_CONN
-      value: "5"
-    - name: DB_CONN_LIFETIME
-      value: "600"
+    - name: HELM_TEMPLATE_NAME
+      value: backend
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -131,14 +105,14 @@ resources:
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector:
-  enabled: false
+  enabled: true
   select:
-    node: ""
+    node: "default"
 
 tolerations: []
 

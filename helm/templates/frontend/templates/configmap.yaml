@@ -1,8 +1,9 @@
-{{- if .Values.configMap.enabled -}}
+{{- if and .Values.configMap .Values.configMap.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "frontend.fullname" . }}
+  namespace: {{ .Values.serviceAccount.namespace }}
   labels:
     {{- include "frontend.labels" . | nindent 4 }}
 {{- with .Values.configMap.data }}

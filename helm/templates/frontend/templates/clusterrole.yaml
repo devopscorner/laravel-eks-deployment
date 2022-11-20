@@ -1,0 +1,14 @@
+{{- if .Values.serviceAccount.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "frontend.fullname" . }}-rbac
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "frontend.serviceAccountName" . }}
+    namespace: {{ .Values.serviceAccount.namespace }}
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}

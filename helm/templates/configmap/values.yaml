@@ -1,0 +1,21 @@
+configMap:
+  enabled: true
+  name: "configmap"
+  mountPath: /app/core/config
+  readOnly: true
+  data:
+    .app.config.json : |-
+        {
+           "AppName": "configMap Template",
+           "GRPCTimeout": 10,
+           "CacheExpiry": 300,
+           "CacheCleanup": 600,
+           "DefaultPageLimit": 3,
+           "ClientTimeout": 10
+        }
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: "devopscorner"
+  namespace: "devopscorner-dev"

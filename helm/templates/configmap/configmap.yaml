@@ -1,0 +1,12 @@
+configMap:
+  enabled: true
+  name: configmap
+  mountPath: {}
+  readOnly: true
+  data: {}
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: "devopscorner"
+  namespace: "devopscorner-dev"

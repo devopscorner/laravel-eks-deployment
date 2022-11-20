@@ -2,12 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "backend.fullname" . }}
+  namespace: {{ .Values.serviceAccount.namespace }}
   labels:
     {{- include "backend.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       {{- include "backend.selectorLabels" . | nindent 6 }}
@@ -37,17 +39,36 @@ spec:
           env:
             {{- toYaml .Values.application.env | nindent 12 }}
           {{- end }}
+          {{- if .Values.envFrom.enabled }}
+          envFrom:
+            {{- toYaml .Values.envFrom.envFrom | nindent 12 }}
+          {{- end }}
+          {{- if .Values.container }}
           ports:
-            - name: grpc
-              containerPort: 3200
-              protocol: TCP
+          {{- with .Values.container.ports }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- if .Values.configMap.enabled }}
+          {{- if or .Values.configMap.enabled .Values.secret.enabled }}
           volumeMounts:
-            - name: {{ include "backend.fullname" . }}
+            {{- if and .Values.configMap .Values.configMap.enabled }}
+            - name: {{ .Values.configMap.name }}
               mountPath: {{ .Values.configMap.mountPath }}
               readOnly: {{ .Values.configMap.readOnly }}
+            {{- end }}
+            {{- if and .Values.secret .Values.secret.enabled }}
+            - name: {{ .Values.secret.name }}
+              mountPath: {{ .Values.secret.mountPath }}
+              subPath: {{ .Values.secret.subPath }}
+              readOnly: {{ .Values.secret.readOnly }}
+            {{- end }}
+          {{- end }}
+          {{- if and .Values.volumes .Values.volumes.enabled }}
+          volumeMounts:
+            - name: {{ .Values.volumes.name }}
+              mountPath: {{ .Values.volumes.mountPath }}
           {{- end }}
       {{- if .Values.nodeSelector.enabled -}}
       {{- with .Values.nodeSelector.select }}
@@ -63,9 +84,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.configMap.enabled }}
+      {{- if or .Values.configMap.enabled .Values.secret.enabled }}
       volumes:
-        - name: {{ include "backend.fullname" . }}
+      {{- if and .Values.configMap .Values.configMap.enabled }}
+        - name: {{ .Values.configMap.name }}
           configMap:
-            name: {{ include "backend.fullname" . }}
+            name: {{ .Values.configMap.name }}
+      {{- end }}
+      {{- if and .Values.secret .Values.secret.enabled }}
+        - name: {{ .Values.secret.name }}
+          secret:
+            secretName: {{ .Values.secret.name }}
+      {{- end }}
       {{- end }}

@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "stateful.fullname" . }}
+  namespace: {{ .Values.serviceAccount.namespace }}
+  labels:
+    {{- include "stateful.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "stateful.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "stateful.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "stateful.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.application.enabled }}
+          env:
+            {{- toYaml .Values.application.env | nindent 12 }}
+          {{- end }}
+          {{- if .Values.envFrom.enabled }}
+          envFrom:
+            {{- toYaml .Values.envFrom.envFrom | nindent 12 }}
+          {{- end }}
+          {{- if .Values.container }}
+          ports:
+          {{- with .Values.container.ports }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{ end }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if or .Values.configMap.enabled .Values.secret.enabled }}
+          volumeMounts:
+            {{- if and .Values.configMap .Values.configMap.enabled }}
+            - name: {{ .Values.configMap.name }}
+              mountPath: {{ .Values.configMap.mountPath }}
+              readOnly: {{ .Values.configMap.readOnly }}
+            {{- end }}
+            {{- if and .Values.secret .Values.secret.enabled }}
+            - name: {{ .Values.secret.name }}
+              mountPath: {{ .Values.secret.mountPath }}
+              subPath: {{ .Values.secret.subPath }}
+              readOnly: {{ .Values.secret.readOnly }}
+            {{- end }}
+          {{- end }}
+          {{- if and .Values.volumes .Values.volumes.enabled }}
+          volumeMounts:
+            - name: {{ .Values.volumes.name }}
+              mountPath: {{ .Values.volumes.mountPath }}
+          {{- end }}
+      {{- if .Values.nodeSelector.enabled -}}
+      {{- with .Values.nodeSelector.select }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.configMap.enabled .Values.secret.enabled }}
+      volumes:
+      {{- if and .Values.configMap .Values.configMap.enabled }}
+        - name: {{ .Values.configMap.name }}
+          configMap:
+            name: {{ .Values.configMap.name }}
+      {{- end }}
+      {{- if and .Values.secret .Values.secret.enabled }}
+        - name: {{ .Values.secret.name }}
+          secret:
+            secretName: {{ .Values.secret.name }}
+      {{- end }}
+      {{- end }}

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "stateful.fullname" . }}
+  namespace: {{ .Values.serviceAccount.namespace }}
+  labels:
+    {{- include "stateful.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.service }}
+  type: {{ .Values.service.type }}
+  {{- with .Values.service.ports }}
+  ports:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
+  selector:
+    {{- include "stateful.selectorLabels" . | nindent 4 }}

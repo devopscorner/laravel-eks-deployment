@@ -1,0 +1,140 @@
+---
+replicaCount: 1
+
+secret:
+  enabled: false
+  name: "secret-stateful"
+  mountPath: {}
+  subPath: {}
+  readOnly: true
+  data: {}
+
+configMap:
+  enabled: true
+  name: "config-stateful"
+  mountPath: /app/core/config
+  readOnly: true
+  data:
+    .app.config.json : |-
+        {
+           "AppName": "Stateful Helm Template",
+           "GRPCTimeout": 10,
+           "CacheExpiry": 300,
+           "CacheCleanup": 600,
+           "DefaultPageLimit": 3,
+           "ClientTimeout": 10
+        }
+
+image:
+  repository: devopscorner/cicd:alpine
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
+  namespace: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+livenessProbe: {}
+#   initialDelaySeconds: 30
+#   periodSeconds: 10
+#   timeoutSeconds: 5
+#   successThreshold: 1
+#   failureThreshold: 3
+
+readinessProbe: {}
+#   initialDelaySeconds: 5
+#   periodSeconds: 10
+#   timeoutSeconds: 1
+#   successThreshold: 1
+#   failureThreshold: 3
+
+## Persist data to a persistent volume
+persistence:
+  enabled: false
+  ## database data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "gp2"
+  # persistentVolumeReclaimPolicy: Recycle
+  # volumeMode: Filesystem
+  accessMode: ReadWriteOnce
+  ## Persistant Volume
+  capacity: 20Gi
+  ## Persistant Volume Claim
+  size: 8Gi
+  annotations: {}
+  selector: {}
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+    - name: psql
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: ""
+      paths: []
+  tls: []
+
+application:
+  enabled: true
+  env:
+    - name: HELM_TEMPLATE_NAME
+      value: stateful
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 64Mi
+  requests:
+    cpu: 100m
+    memory: 32Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector:
+  enabled: true
+  select:
+    node: "default"
+
+tolerations: []
+
+affinity: {}

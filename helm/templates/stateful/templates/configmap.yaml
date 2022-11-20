@@ -1,0 +1,13 @@
+{{- if and .Values.configMap .Values.configMap.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "stateful.fullname" . }}
+  namespace: {{ .Values.serviceAccount.namespace }}
+  labels:
+    {{- include "stateful.labels" . | nindent 4 }}
+{{- with .Values.configMap.data }}
+data:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}

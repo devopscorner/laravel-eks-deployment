@@ -1,15 +1,13 @@
-# Default values for frontend.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
+---
 replicaCount: 1
 
 secret:
-  enabled: true
-  data:
-    .dockerconfigjson: ""
-    username: ""
-    password: ""
+  enabled: false
+  name: "secret-frontend"
+  mountPath: {}
+  subPath: {}
+  readOnly: true
+  data: {}
 
 configMap:
   enabled: true
@@ -28,22 +26,17 @@ configMap:
         }
 
 image:
-  repository: nginx
+  repository: devopscorner/cicd:alpine
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
+  create: false
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
   name: ""
   namespace: ""
 
@@ -62,38 +55,25 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
-  targetPort: 80
-
-container:
-  port: 8080
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP
 
 ingress:
-  enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/cors-allow-headers: '*'
-    nginx.ingress.kubernetes.io/cors-allow-methods: '*'
-    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/affinity: cookie
-    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: false
+  annotations: {}
   hosts:
-    - host: frontend.internal.service
-      paths:
-      - path: /
-        backend:
-          serviceName: frontend.internal.service
-          servicePort: 80
+    - host: ""
+      paths: []
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - frontend.internal.service
 
 application:
   enabled: true
   env:
+    - name: HELM_TEMPLATE_NAME
+      value: frontend
     - name: ALLOWED_ORIGINS
       value: '*'
     - name: PORT
@@ -104,16 +84,6 @@ application:
       value: "1"
 
 resources:
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
   limits:
     cpu: 100m
     memory: 64Mi
@@ -124,14 +94,14 @@ resources:
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector:
-  enabled: false
+  enabled: true
   select:
-    node: ""
+    node: "default"
 
 tolerations: []
 

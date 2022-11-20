@@ -5,11 +5,12 @@
 replicaCount: 1
 
 secret:
-  enabled: true
-  data:
-    .dockerconfigjson: ""
-    username: ""
-    password: ""
+  enabled: false
+  name: "secret-frontend"
+  mountPath: {}
+  subPath: {}
+  readOnly: true
+  data: {}
 
 configMap:
   enabled: true
@@ -17,21 +18,21 @@ configMap:
   mountPath: /app/core/config
   readOnly: true
   data:
-    .app.config.json : |-
-        {
-           "AppName": "Frontend Helm Template",
-           "GRPCTimeout": 10,
-           "CacheExpiry": 300,
-           "CacheCleanup": 600,
-           "DefaultPageLimit": 3,
-           "ClientTimeout": 10
-        }
+    .app.config.json: |-
+      {
+         "AppName": "Frontend Helm Template",
+         "GRPCTimeout": 10,
+         "CacheExpiry": 300,
+         "CacheCleanup": 600,
+         "DefaultPageLimit": 3,
+         "ClientTimeout": 10
+      }
 
 image:
-  repository: nginx
+  repository: devopscorner/cicd:alpine
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,7 +40,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -49,10 +50,12 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -61,47 +64,27 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  enable: false
   type: ClusterIP
-  port: 80
-  targetPort: 80
-
-container:
-  port: 8080
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP
 
 ingress:
-  enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/cors-allow-headers: '*'
-    nginx.ingress.kubernetes.io/cors-allow-methods: '*'
-    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/affinity: cookie
-    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: false
+  annotations: {}
   hosts:
-    - host: frontend.internal.service
-      paths:
-      - path: /
-        backend:
-          serviceName: frontend.internal.service
-          servicePort: 80
+    - host: ""
+      paths: []
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - frontend.internal.service
 
 application:
   enabled: true
   env:
-    - name: ALLOWED_ORIGINS
-      value: '*'
-    - name: PORT
-      value: "8080"
-    - name: REFRESH_TOKEN_EXPIRE_HOUR
-      value: "48"
-    - name: TOKEN_EXPIRE_HOUR
-      value: "1"
+    - name: HELM_TEMPLATE_NAME
+      value: frontend
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -124,14 +107,14 @@ resources:
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector:
-  enabled: false
+  enabled: true
   select:
-    node: ""
+    node: "default"
 
 tolerations: []
 
