@@ -14,6 +14,7 @@ releases:
     values:
       - ./laravel-values.yml
     <<: *default
+
   - name: mariadb
     chart: devopscorner-lab/stateful
     values:
