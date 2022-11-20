@@ -12,13 +12,7 @@ HELM_TEMPLATE="api \
   frontend \
   secretref \
   stateful \
-  svcrole \
-  spinnaker-api \
-  spinnaker-backend \
-  spinnaker-configmap \
-  spinnaker-frontend \
-  spinnaker-secretref \
-  spinnaker-stateful
+  svcrole
 "
 HELM_REPO_PATH="s3://devopscorner-helm-chart/lab"
 HELM_REPO_NAME="devopscorner-lab"
