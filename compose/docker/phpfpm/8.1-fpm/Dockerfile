@@ -1,6 +1,18 @@
 FROM php:8.1.12-fpm-alpine3.16
 
-LABEL Maintainer="DevOpsCorner Indonesia <joseluisq.net>" \
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG GIT_COMMIT
+ARG GIT_URL
+
+ENV VENDOR="DevOpsCorner.id"
+ENV AUTHOR="Dwi Fahni Denni <support@devopscorner.id>"
+ENV IMG_NAME="phpfpm"
+ENV IMG_VERSION="8.1"
+ENV IMG_DESC="Docker Image Alpine PHP-Fpm 8.1"
+ENV IMG_ARCH="amd64/x86_64"
+
+LABEL Maintainer="DevOpsCorner Indonesia <support@devopscorner.id>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
@@ -348,7 +360,7 @@ STOPSIGNAL SIGQUIT
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-EXPOSE 9000
+EXPOSE 8000
 CMD ["php-fpm"]
 
 

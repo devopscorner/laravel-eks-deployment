@@ -1,5 +1,17 @@
 FROM php:7.4.33-fpm-alpine3.16
 
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG GIT_COMMIT
+ARG GIT_URL
+
+ENV VENDOR="DevOpsCorner.id"
+ENV AUTHOR="Dwi Fahni Denni <support@devopscorner.id>"
+ENV IMG_NAME="phpfpm"
+ENV IMG_VERSION="7.4"
+ENV IMG_DESC="Docker Image Alpine PHP-Fpm 7.4"
+ENV IMG_ARCH="amd64/x86_64"
+
 LABEL Maintainer="DevOpsCorner Indonesia <support@devopscorner.id>" \
     Description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux."
 
@@ -354,7 +366,7 @@ STOPSIGNAL SIGQUIT
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-EXPOSE 9000
+EXPOSE 8000
 CMD ["php-fpm"]
 
 
