@@ -9,7 +9,7 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.146.146.0/16
+        - subnet: 172.150.150.0/16
 
 #================================================================================================
 # VOLUME SETUP
@@ -38,7 +38,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: ${DATA_UBUNTU:-/opt/data/docker/phpfpm}
+      device: ${DATA_PHPFPM:-/opt/data/docker/phpfpm}
 
 services:
 #================================================================================================
@@ -61,28 +61,29 @@ services:
     privileged: true
     networks:
       devopscorner_net:
-        ipv4_address: ${CONTAINER_IP_ADMINER:-172.146.146.3}
+        ipv4_address: ${CONTAINER_IP_ADMINER:-172.150.150.200}
 
 #================================================================================================
 # PORTAINER
 #================================================================================================
   portainer:
-    image: dockerframework/portainer:${PORTAINER_VERSION:-2.9}
+    image: dockerframework/portainer:${PORTAINER_VERSION:-2.9.0}
     container_name: ${CONTAINER_PORTAINER:-devopscorner_portainer}
     restart: unless-stopped
+    hostname: myportainer
     ports:
-      - "${PORT_PORTAINER:-5212}:9000"
+      - "${PORT_PORTAINER:-5213}:9000"
     volumes:
   #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-  #   - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+      - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
       - vol_portainer:/data
     environment:
       - PORTAINER_TEMPLATE=generic
-      - PORTAINER_VERSION=${PORTAINER_VERSION:-2.9}
+      - PORTAINER_VERSION=${PORTAINER_VERSION:-2.9.0}
     privileged: true
     networks:
       devopscorner_net:
-        ipv4_address: ${CONTAINER_IP_PORTAINER:-172.146.146.5}
+        ipv4_address: ${CONTAINER_IP_PORTAINER:-172.150.150.201}
 
 #================================================================================================
 # PHPFPM
@@ -90,16 +91,17 @@ services:
   phpfpm:
   # image: zeroc0d3/laravel-kubernetes:${LARAVEL_K8S_VERSION:-latest}
     build:
-      context: docker/phpfpm
+      context: .
       dockerfile: Dockerfile
     container_name: ${CONTAINER_PHPFPM:-devopscorner_phpfpm}
     restart: unless-stopped
+    hostname: myphpfpm
     ports:
-      - "${PORT_PHPFPM:-8000}:80"
+      - "${PORT_PHPFPM:-5300}:9000"
     volumes:
   #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-  #   - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
-      - ${PHPFPM_TOOLS:-./phpfpm}:/tmp/phpfpm
+      - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+  #   - ${PHPFPM_TOOLS:-./phpfpm}:/tmp/phpfpm
     environment:
       - TZ="Asia/Jakarta"
       - PHP_VERSION=${PHP_VERSION:-8.1}
@@ -111,11 +113,17 @@ services:
       - DB_DATABASE=${MARIADB_DATABASE:-laravel_dev}
       - DB_USERNAME=${MARIADB_USER:-laravel_user}
       - DB_PASSWORD=${MARIADB_PASSWORD:-secretpassword}
+    healthcheck:
+      test: "${DOCKER_HEALTHCHECK_PHPFPM:-curl localhost:8000}"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "5s"
+      retries: 5
     privileged: true
     tty: true
     networks:
       devopscorner_net:
-        ipv4_address: ${CONTAINER_IP_PHPFPM:-172.146.146.200}
+        ipv4_address: ${CONTAINER_IP_PHPFPM:-172.150.150.202}
 
 #================================================================================================
 # MARIADB
@@ -127,11 +135,12 @@ services:
   #   dockerfile: Dockerfile
     container_name: ${CONTAINER_MARIADB:-devopscorner_mariadb}
     restart: always
+    hostname: mymariadb
     ports:
       - "${PORT_MARIADB:-3306}:3306"
     volumes:
   #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-  #   - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+      - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
       - vol_mariadb:/var/lib/mysql
       - ./docker/ubuntu-mariadb/rootfs/etc/my.cnf:/etc/my.cnf
       - ./docker/ubuntu-mariadb/rootfs/etc/my.cnf.d/mariadb-server.cnf:/etc/my.cnf.d/mariadb-server.cnf
@@ -152,4 +161,4 @@ services:
     tty: true
     networks:
       devopscorner_net:
-        ipv4_address: ${CONTAINER_IP_MARIADB:-172.146.146.201}
+        ipv4_address: ${CONTAINER_IP_MARIADB:-172.150.150.203}
