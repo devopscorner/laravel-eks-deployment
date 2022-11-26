@@ -25,6 +25,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 
 
 ---
+
 ## Version 1.1
 
 - Upgrade Laravel version 8.x (8.65) to 9.x (9.19 / 9.3.12)
