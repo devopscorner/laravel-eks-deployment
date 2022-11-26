@@ -90,7 +90,7 @@ services:
   phpfpm:
   # image: zeroc0d3/laravel-kubernetes:${LARAVEL_K8S_VERSION:-latest}
     build:
-      context: .
+      context: docker/phpfpm
       dockerfile: Dockerfile
     container_name: ${CONTAINER_PHPFPM:-devopscorner_phpfpm}
     restart: unless-stopped
@@ -102,7 +102,7 @@ services:
       - ${PHPFPM_TOOLS:-./phpfpm}:/tmp/phpfpm
     environment:
       - TZ="Asia/Jakarta"
-      - PHP_VERSION=${PHP_VERSION:-7.4}
+      - PHP_VERSION=${PHP_VERSION:-8.1}
       - APP_KEY="base64:KvkVVCKALENqUruV8z6Lf85poviBolKzDxS+swRxxDk="
       - APP_ENV=local
       - APP_DEBUG=true

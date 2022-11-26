@@ -1,5 +1,5 @@
-IMAGE = zeroc0d3/mariadb
-TAG = 10.5.12
+IMAGE = YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/phpfm
+TAG = 8.1-fpm
 
 clean-local:
 	docker rmi $(CLEAN_OPTIONS) $(IMAGE):$(TAG) || true
