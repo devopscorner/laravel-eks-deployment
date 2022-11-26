@@ -3,7 +3,7 @@
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/laravel-eks-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/laravel-eks-deployment?sort=semver)
 ![download all](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.1/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.2/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/laravel-eks-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://raw.githubusercontent.com/devopscorner/laravel-eks-deployment/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/laravel-eks-deployment)
@@ -14,6 +14,32 @@
 
 Laravel Kubernetes (EKS) Deployment Tools
 
+---
+## Available Tags
+
+### **PHP-FPM**
+
+| Image name | Size |
+|------------|------|
+| `devopscorner/phpfpm:latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=latest) |
+| `devopscorner/phpfpm:alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=alpine) |
+| `devopscorner/phpfpm:8.1-alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/8.1-alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=8.1-alpine) |
+| `devopscorner/phpfpm:8.1` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/8.1.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=8.1) |
+| `devopscorner/phpfpm:8.0-alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/8.0-alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=8.0-alpine) |
+| `devopscorner/phpfpm:8.0` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/8.0.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=8.0) |
+| `devopscorner/phpfpm:7.4-alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/7.4-alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=7.4-alpine) |
+| `devopscorner/phpfpm:7.4` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/phpfpm/7.4.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/phpfpm/tags?page=1&ordering=last_updated&name=7.4) |
+
+
+### **Laravel Framework**
+
+| Image name | Size |
+|------------|------|
+| `devopscorner/laravel:latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/laravel/latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/laravel/tags?page=1&ordering=last_updated&name=latest) |
+| `devopscorner/laravel:9` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/laravel/9.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/laravel/tags?page=1&ordering=last_updated&name=9) |
+| `devopscorner/laravel:9.41` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/laravel/9.41.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/laravel/tags?page=1&ordering=last_updated&name=9.41) |
+
+---
 ## Prerequirements
 
 - [Docker](https://www.docker.com)
@@ -220,7 +246,7 @@ Teraform AWS Providers, eg:
   Engine:
     Version:          20.10.21
     API version:      1.41 (minimum version 1.12)
-    Go version:       go1.18.7
+    Go version:       go9.7
     Git commit:       3056208
     Built:            Tue Oct 25 18:00:19 2022
     OS/Arch:          linux/amd64
