@@ -19,6 +19,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Upgrade Laravel version 8.x (8.65) to 9.x (9.19 / 9.3.12)
 - Added component Laravel debug with Laravel Telescope
 - Added component Laravel authentification with Laravel Breeze
+- Added container Alpine PHPFpm 7.4-fpm, 8.0-fpm & 8.1-fpm
 
 ---
 ## Version 1.0
