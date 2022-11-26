@@ -23,7 +23,7 @@ data.tls_certificate.cluster
 aws_eks_cluster.aws_eks
 aws_eks_node_group.devops["monitoring"]
 aws_eks_node_group.devops["tools"]
-aws_eks_node_group.goapp["prod"]
+aws_eks_node_group.laravel["prod"]
 aws_eks_node_group.sharedredis["prod"]
 aws_iam_openid_connect_provider.cluster
 aws_iam_policy.route53_cert_policy
@@ -42,7 +42,7 @@ aws_iam_role_policy_attachment.eks_iam_worker_node_policy
 aws_iam_role_policy_attachment.route53_cert_policy
 aws_lb_target_group.devops["monitoring"]
 aws_lb_target_group.devops["tools"]
-aws_lb_target_group.goapp["prod"]
+aws_lb_target_group.laravel["prod"]
 aws_lb_target_group.sharedredis["prod"]
 aws_security_group.eks_sg
 null_resource.eks_cluster_autoscaler_role
