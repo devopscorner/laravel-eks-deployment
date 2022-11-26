@@ -18,13 +18,14 @@ Laravel Kubernetes (EKS) Deployment Tools
 ## Version 1.2
 
 - Added docker image references for PHPFpm (`devopscorner/phpfpm`)
-- Fixing Listing Port from 9000 to 8000
+- Fixing listening port from 9000 to 8000
 - Added docker-compose container hostname
 - Added healthcheck for phpfpm container in port 8000
 - Change docker configuration laravel to `devopscorner/laravel`
 
 
 ---
+
 ## Version 1.1
 
 - Upgrade Laravel version 8.x (8.65) to 9.x (9.19 / 9.3.12)
