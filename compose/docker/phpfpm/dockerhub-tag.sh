@@ -8,7 +8,7 @@
 set -e
 
 # export CI_PROJECT_PATH="devopscorner"
-# export CI_PROJECT_NAME="laravel"
+# export CI_PROJECT_NAME="phpfpm"
 
 # export IMAGE="$CI_PROJECT_PATH/$CI_PROJECT_NAME"
 export IMAGE=$3
@@ -44,10 +44,10 @@ docker_tag() {
 }
 
 main() {
-  # set_tag alpine latest devopscorner/laravel
-  # set_tag alpine 8.1 devopscorner/laravel
-  # set_tag alpine 8.0 devopscorner/laravel
-  # set_tag alpine 7.4 devopscorner/laravel
+  # set_tag alpine latest devopscorner/phpfpm
+  # set_tag alpine 8.1 devopscorner/phpfpm
+  # set_tag alpine 8.0 devopscorner/phpfpm
+  # set_tag alpine 7.4 devopscorner/phpfpm
   set_tag $1 $2 $3
   docker_tag
   echo ''

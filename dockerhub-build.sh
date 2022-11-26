@@ -34,9 +34,9 @@ docker_build() {
 }
 
 main() {
-  # docker_build alpine Dockerfile.alpine 3.16 devopscorner/laravel
-  # docker_build ubuntu Dockerfile.ubuntu 22.04 devopscorner/laravel
-  # docker_build codebuild Dockerfile.codebuild 4.0 devopscorner/laravel
+  # docker_build 8.1 Dockerfile-8.1-fpm alpine devopscorner/laravel
+  # docker_build 8.0 Dockerfile-8.0-fpm alpine devopscorner/laravel
+  # docker_build 7.4 Dockerfile-7.4-fpm alpine devopscorner/laravel
   docker_build $1 $2 $3 $4
   echo ''
   echo '-- ALL DONE --'

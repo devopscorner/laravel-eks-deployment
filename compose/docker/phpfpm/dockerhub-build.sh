@@ -7,26 +7,16 @@
 # -----------------------------------------------------------------------------
 set -e
 
-export AWS_ACCOUNT_ID=$1
-export CI_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-1.amazonaws.com"
-export CI_ECR_PATH=$4
+# export CI_PROJECT_PATH="devopscorner"
+# export CI_PROJECT_NAME="phpfpm"
 
-export IMAGE="$CI_REGISTRY/$CI_ECR_PATH"
-
-login_ecr() {
-  echo "============="
-  echo "  Login ECR  "
-  echo "============="
-  PASSWORD=`aws ecr get-login-password --region ap-southeast-1`
-  echo $PASSWORD | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-1.amazonaws.com
-  echo '- DONE -'
-  echo ''
-}
+# export IMAGE="$CI_PROJECT_PATH/$CI_PROJECT_NAME"
+export IMAGE=$4
 
 docker_build() {
-  export TAGS_ID=$2
-  export FILE=$3
-  export CUSTOM_TAGS=$4
+  export TAGS_ID=$1
+  export FILE=$2
+  export CUSTOM_TAGS=$3
 
   if [ "$CUSTOM_TAGS" = "" ]; then
     echo "Build Image => $IMAGE:${TAGS_ID}"
@@ -44,11 +34,9 @@ docker_build() {
 }
 
 main() {
-  # login_ecr
-  # docker_build 0987654321 alpine Dockerfile devopscorner/laravel
-  # docker_build 0987654321 latest Dockerfile devopscorner/laravel
-  # docker_build 0987654321 9 Dockerfile devopscorner/laravel
-  # docker_build 0987654321 9.41 Dockerfile devopscorner/laravel
+  # docker_build 8.1 Dockerfile-8.1-fpm alpine devopscorner/phpfpm
+  # docker_build 8.0 Dockerfile-8.0-fpm alpine devopscorner/phpfpm
+  # docker_build 7.4 Dockerfile-7.4-fpm alpine devopscorner/phpfpm
   docker_build $1 $2 $3 $4
   echo ''
   echo '-- ALL DONE --'

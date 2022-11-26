@@ -14,6 +14,17 @@
 Laravel Kubernetes (EKS) Deployment Tools
 
 ---
+
+## Version 1.2
+
+- Added docker image references for PHPFpm (`devoscorner/phpfpm`)
+- Fixing Listing Port from 9000 to 8000
+- Added docker-compose container hostname
+- Added healthcheck for phpfpm container in port 8000
+- Change docker configuration laravel to `devoscorner/phpfpm`
+
+
+---
 ## Version 1.1
 
 - Upgrade Laravel version 8.x (8.65) to 9.x (9.19 / 9.3.12)
@@ -22,6 +33,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Added container Alpine PHPFpm 7.4-fpm, 8.0-fpm & 8.1-fpm
 
 ---
+
 ## Version 1.0
 
 - Refactoring Folder Structure
@@ -44,6 +56,7 @@ Laravel Kubernetes (EKS) Deployment Tools
     - `tfsec`
 
 ---
+
 ## Version 0.2.5
 
 - Refactoring Helm Template & Values
@@ -52,6 +65,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Added modules RDS
 
 ---
+
 ## Version 0.2.4
 
 - Refactoring manifest setup
@@ -59,12 +73,14 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Refactoring path S3 bucket
 
 ---
+
 ## Version 0.2.3
 
 - Added Letsencrypt SSL configuration
 - Update notes Step Deployment
 
 ---
+
 ## Version 0.2.2
 
 - Refactoring helm template for secret & secret-prod
@@ -72,6 +88,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Update docker ignore files
 
 ---
+
 ## Version 0.2.1
 
 - Update laravel blade welcome template & docker-compose configuration
@@ -79,6 +96,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Added ignore files & folders
 
 ---
+
 ## Version 0.2
 
 - Added Laravel Container
@@ -86,11 +104,13 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Added HelmChart Laravel
 
 ---
+
 ## Version 0.1.1
 
 - Added Repository Submodule for Terraform Modules
 
 ---
+
 ## Version 0.1
 
 - Initial commit for infra-laravel-deployment
