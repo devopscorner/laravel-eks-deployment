@@ -3,9 +3,9 @@
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/laravel-eks-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/laravel-eks-deployment?sort=semver)
 ![download all](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.0/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.1/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/laravel-eks-deployment.svg)
-![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/laravel-eks-deployment/blob/master/clone.json?raw=True&logo=github)
+![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://raw.githubusercontent.com/devopscorner/laravel-eks-deployment/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/laravel-eks-deployment)
 ![pull requests](https://img.shields.io/github/issues-pr/devopscorner/laravel-eks-deployment)
 ![forks](https://img.shields.io/github/forks/devopscorner/laravel-eks-deployment)
@@ -197,52 +197,43 @@ Teraform AWS Providers, eg:
 
 ### Versioning
 
-- AWS Cli version
-
-  ```
-  aws --version
-  ---
-  aws-cli/1.20.1 Python/3.8.5 Darwin/20.6.0 botocore/1.21.1
-  ```
-
 - Docker version
 
   ```
   docker -v
   ---
-  Docker version 20.10.8, build 3967b7d
+  Docker version 20.10.17-rd, build c2e4e01
 
   docker version
   ---
   Client:
-    Cloud integration: 1.0.17
-    Version:           20.10.7
+    Version:           20.10.17-rd
     API version:       1.41
-    Go version:        go1.16.4
-    Git commit:        f0df350
-    Built:             Wed Jun  2 11:56:22 2021
+    Go version:        go1.17.11
+    Git commit:        c2e4e01
+    Built:             Fri Jul 22 18:31:17 2022
     OS/Arch:           darwin/amd64
     Context:           default
     Experimental:      true
 
-  Server: Docker Engine - Community
-    Engine:
-      Version:          20.10.7
-      API version:      1.41 (minimum version 1.12)
-      Go version:       go1.13.15
-      Git commit:       b0f5bc3
-      Built:            Wed Jun  2 11:54:58 2021
-      OS/Arch:          linux/amd64
-      Experimental:     false
-    containerd:
-      Version:          1.4.6
-      GitCommit:        d71fcd7d8303cbf684402823e425e9dd2e99285d
-    runc:
-      Version:          1.0.0-rc95
-      GitCommit:        b9ee9c6314599f1b4a7f497e1f1f856fe433d3b7
-    docker-init:
-      Version:          0.19.0
-      GitCommit:        de40ad0
+  Server: Docker Desktop 4.14.1 (91661)
+  Engine:
+    Version:          20.10.21
+    API version:      1.41 (minimum version 1.12)
+    Go version:       go1.18.7
+    Git commit:       3056208
+    Built:            Tue Oct 25 18:00:19 2022
+    OS/Arch:          linux/amd64
+    Experimental:     false
+  containerd:
+    Version:          1.6.9
+    GitCommit:        1c90a442489720eec95342e1789ee8a5e1b9536f
+  runc:
+    Version:          1.1.4
+    GitCommit:        v1.1.4-0-g5fd4c4d
+  docker-init:
+    Version:          0.19.0
+    GitCommit:        de40ad0
   ```
 
 - Docker-Compose version
@@ -250,26 +241,37 @@ Teraform AWS Providers, eg:
   ```
   docker-compose -v
   ---
-  docker-compose version 1.29.2, build 5becea4c
-
-  docker-compose version
-  ---
-  docker-compose version 1.29.2, build 5becea4c
-  docker-py version: 5.0.0
-  CPython version: 3.9.0
-  OpenSSL version: OpenSSL 1.1.1h  22 Sep 2020
+  Docker Compose version v2.11.1
   ```
 
-- Terraform version
+- AWS Cli
+
+  ```
+  aws --version
+  ---
+  aws-cli/2.8.7 Python/3.9.11 Darwin/21.6.0 exe/x86_64 prompt/off
+  ```
+
+- Terraform Cli
 
   ```
   terraform version
   ---
-  Terraform v1.0.9
-  + provider registry.terraform.io/hashicorp/aws v3.61.0
-  + provider registry.terraform.io/hashicorp/local v2.1.0
-  + provider registry.terraform.io/hashicorp/null v3.1.0
-  + provider registry.terraform.io/hashicorp/template v2.2.0
+  Terraform v1.3.5
+  on darwin_amd64
+  - provider registry.terraform.io/hashicorp/aws v3.74.3
+  - provider registry.terraform.io/hashicorp/local v2.1.0
+  - provider registry.terraform.io/hashicorp/null v3.1.0
+  - provider registry.terraform.io/hashicorp/random v3.1.0
+  - provider registry.terraform.io/hashicorp/time v0.7.2
+  ```
+
+- Terraform Environment Cli
+
+  ```
+  tfenv -v
+  ---
+  tfenv 2.2.2
   ```
 
 ## Copyright
