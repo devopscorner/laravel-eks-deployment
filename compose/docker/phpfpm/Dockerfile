@@ -12,6 +12,9 @@ ENV IMG_VERSION="8.1"
 ENV IMG_DESC="Docker Image Alpine PHP-Fpm 8.1"
 ENV IMG_ARCH="amd64/x86_64"
 
+LABEL Maintainer="DevOpsCorner Indonesia <support@devopscorner.id>" \
+    Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
+
 # Composer - https://getcomposer.org/download/
 ARG COMPOSER_VERSION="2.4.4"
 ARG COMPOSER_SUM="c252c2a2219956f88089ffc242b42c8cb9300a368fd3890d63940e4fc9652345"
