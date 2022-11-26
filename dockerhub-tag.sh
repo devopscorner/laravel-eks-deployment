@@ -13,10 +13,7 @@ set -e
 # export IMAGE="$CI_PROJECT_PATH/$CI_PROJECT_NAME"
 export IMAGE=$3
 
-# export CICD_VERSION="1.0.5"
 # export ALPINE_VERSION="3.16"
-# export UBUNTU_VERSION="22.04"
-# export CODEBUILD_VERSION="4.0"
 
 set_tag() {
   export TAGS_ID=$1
@@ -47,9 +44,10 @@ docker_tag() {
 }
 
 main() {
-  # set_tag alpine 3.16 devopscorner/laravel
-  # set_tag ubuntu 22.04 devopscorner/laravel
-  # set_tag codebuild 4.0 devopscorner/laravel
+  # set_tag alpine latest devopscorner/laravel
+  # set_tag alpine 8.1 devopscorner/laravel
+  # set_tag alpine 8.0 devopscorner/laravel
+  # set_tag alpine 7.4 devopscorner/laravel
   set_tag $1 $2 $3
   docker_tag
   echo ''

@@ -40,8 +40,8 @@ docker_pull() {
 main() {
   login_ecr
   # docker_pull 0987654321 alpine devopscorner/laravel
-  # docker_pull 0987654321 ubuntu devopscorner/laravel
-  # docker_pull 0987654321 codebuild devopscorner/laravel
+  # docker_pull 0987654321 9 devopscorner/laravel
+  # docker_pull 0987654321 9.41 devopscorner/laravel
   docker_pull ${AWS_ACCOUNT_ID} $2 $3
   echo ''
   echo '-- ALL DONE --'

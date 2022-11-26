@@ -44,8 +44,9 @@ docker_push() {
 main() {
   login_ecr
   # docker_push 0987654321 alpine devopscorner/laravel
-  # docker_push 0987654321 ubuntu devopscorner/laravel
-  # docker_push 0987654321 codebuild devopscorner/laravel
+  # docker_push 0987654321 latest devopscorner/laravel
+  # docker_push 0987654321 9 devopscorner/laravel
+  # docker_push 0987654321 9.41 devopscorner/laravel
   docker_push ${AWS_ACCOUNT_ID} $2 $3
   echo ''
   echo '-- ALL DONE --'

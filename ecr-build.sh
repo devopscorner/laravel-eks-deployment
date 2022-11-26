@@ -45,7 +45,10 @@ docker_build() {
 
 main() {
   # login_ecr
-  # docker_build 0987654321 alpine Dockerfile.alpine devopscorner/laravel
+  # docker_build 0987654321 alpine Dockerfile devopscorner/laravel
+  # docker_build 0987654321 latest Dockerfile devopscorner/laravel
+  # docker_build 0987654321 9 Dockerfile devopscorner/laravel
+  # docker_build 0987654321 9.41 Dockerfile devopscorner/laravel
   docker_build $1 $2 $3 $4
   echo ''
   echo '-- ALL DONE --'

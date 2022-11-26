@@ -37,8 +37,9 @@ docker_push() {
 main() {
   login_docker
   # docker_push alpine devopscorner/laravel
-  # docker_push ubuntu devopscorner/laravel
-  # docker_push codebuild devopscorner/laravel
+  # docker_push 8.1 devopscorner/laravel
+  # docker_push 8.0 devopscorner/laravel
+  # docker_push 7.4 devopscorner/laravel
   docker_push $1 $2
   echo ''
   echo '-- ALL DONE --'
