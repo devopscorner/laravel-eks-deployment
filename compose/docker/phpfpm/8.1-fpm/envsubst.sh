@@ -16,7 +16,7 @@ envsubst < "$CWD/php-fpm.tmpl.conf" > "/usr/local/etc/php-fpm.conf"
 # 2. PHP-FPM WWW Pool (www.conf)
 XUSER=www-data
 XGROUP=www-data
-XLISTEN=8000
+XLISTEN=9000
 XLISTEN_OWNER=$XUSER
 XLISTEN_GROUP=$XGROUP
 

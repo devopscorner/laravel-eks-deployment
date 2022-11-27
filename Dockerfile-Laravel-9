@@ -46,9 +46,9 @@ ENV LOG_CHANNEL=stderr
 RUN mkdir -p /usr/share/nginx/laravel
 COPY src /usr/share/nginx/laravel
 RUN cd /usr/share/nginx/laravel && \
-   rm -f composer.lock && \
-   rm -rf vendor && \
-   composer install --no-dev; sync
+    rm -f composer.lock && \
+    rm -rf vendor && \
+    composer install --no-dev; sync
 
 # Set a volume mount point for your code
 VOLUME /usr/share/nginx/laravel

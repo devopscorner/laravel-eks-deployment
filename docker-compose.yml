@@ -39,6 +39,12 @@ volumes:
       o: bind
       type: none
       device: ${DATA_LARAVEL:-/opt/data/docker/laravel}
+  vol_nginx:
+    driver: ${VOLUMES_DRIVER:-local}
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_NGINX:-/opt/data/docker/nginx-alpine}
 
 services:
 #================================================================================================
@@ -89,19 +95,20 @@ services:
 # LARAVEL
 #================================================================================================
   laravel:
-  # image: zeroc0d3/laravel-kubernetes:${LARAVEL_K8S_VERSION:-latest}
+  # image: devopscorner/laravel:${LARAVEL_K8S_VERSION:-latest}
     build:
       context: .
       dockerfile: Dockerfile
     container_name: ${CONTAINER_LARAVEL:-devopscorner_laravel}
+    links:
+      - mariadb
     restart: unless-stopped
     hostname: mylaravel
     ports:
-      - "${PORT_LARAVEL:-5300}:9000"
+      - "${PORT_LARAVEL:-8000}:9000"
     volumes:
   #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
       - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
-  #   - ${LARAVEL_TOOLS:-./laravel}:/tmp/laravel
     environment:
       - TZ="Asia/Jakarta"
       - PHP_VERSION=${PHP_VERSION:-8.1}
@@ -144,8 +151,6 @@ services:
       - vol_mariadb:/var/lib/mysql
       - ./compose/docker/ubuntu-mariadb/rootfs/etc/my.cnf:/etc/my.cnf
       - ./compose/docker/ubuntu-mariadb/rootfs/etc/my.cnf.d/mariadb-server.cnf:/etc/my.cnf.d/mariadb-server.cnf
-      ## Path services ##
-      - ${SERVICES_TOOLS:-./services}:/tmp/services
     environment:
       - ENV=local
       - TZ="Asia/Jakarta"
@@ -162,3 +167,27 @@ services:
     networks:
       devopscorner_net:
         ipv4_address: ${CONTAINER_IP_MARIADB:-172.150.150.203}
+
+#================================================================================================
+# NGINX ALPINE
+#================================================================================================
+  nginx:
+    image: nginx:${NGINX_VERSION:-1.23-alpine}
+    container_name: ${CONTAINER_CICD_ALPINE:-devopscorner_nginx}
+    restart: unless-stopped
+    links:
+      - laravel
+    ports:
+      - "${PORT_NGINX:-5250}:80"
+    volumes:
+      #- /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock   ## Do not use it in k8s
+    environment:
+      - TZ="Asia/Jakarta"
+      - ALPINE_VERSION=${ALPINE_VERSION:-3.16}
+      - NGINX_VERSION=${NGINX_VERSION:-1.23}
+    privileged: true
+    tty: true
+    networks:
+      devopscorner_net:
+        ipv4_address: ${CONTAINER_IP_NGINX:-172.150.150.213}

@@ -2,16 +2,28 @@
 
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/laravel-eks-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/laravel-eks-deployment?sort=semver)
+[![phpfpm pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=phpfpm%20container&logo=php)](https://hub.docker.com/r/devopscorner/phpfpm/)
+[![laravel pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=laravel%20container&logo=laravel)](https://hub.docker.com/r/devopscorner/laravel/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/total.svg)
+![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.2/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/laravel-eks-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://raw.githubusercontent.com/devopscorner/laravel-eks-deployment/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/laravel-eks-deployment)
 ![pull requests](https://img.shields.io/github/issues-pr/devopscorner/laravel-eks-deployment)
 ![forks](https://img.shields.io/github/forks/devopscorner/laravel-eks-deployment)
 ![stars](https://img.shields.io/github/stars/devopscorner/laravel-eks-deployment)
-[![License: CC BY-NC 4.0](https://img.shields.io/github/license/devopscorner/laravel-eks-deployment)](https://img.shields.io/github/license/devopscorner/laravel-eks-deployment)
+[![license](https://img.shields.io/github/license/devopscorner/laravel-eks-deployment)](https://img.shields.io/github/license/devopscorner/laravel-eks-deployment)
 
 Laravel Kubernetes (EKS) Deployment Tools
+
+---
+
+## Version 1.3
+
+- Revert phpfpm setup listening port to 9000 (default)
+- Set docker-compose laravel bind port 8000 from expose 9000 (default)
+- Set default path work directory laravel container to `/usr/share/nginx/laravel`
+- Added container nginx `1.23-alpine` linked to laravel container
 
 ---
 
