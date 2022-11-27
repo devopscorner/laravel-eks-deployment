@@ -366,7 +366,7 @@ STOPSIGNAL SIGQUIT
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-EXPOSE 8000
+EXPOSE 9000
 CMD ["php-fpm"]
 
 
