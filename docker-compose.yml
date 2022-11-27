@@ -174,7 +174,7 @@ services:
   nginx:
     image: nginx:${NGINX_VERSION:-1.23-alpine}
     container_name: ${CONTAINER_CICD_ALPINE:-devopscorner_nginx}
-    restart: unless-stopped
+    restart: always
     links:
       - laravel
     ports:
