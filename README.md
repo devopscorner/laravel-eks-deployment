@@ -4,8 +4,6 @@ Laravel Kubernetes (EKS) Deployment Tools
 
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/laravel-eks-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/laravel-eks-deployment?sort=semver)
-[![phpfpm pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=phpfpm%20container&logo=php)](https://hub.docker.com/r/devopscorner/phpfpm/)
-[![laravel pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=laravel%20container&logo=laravel)](https://hub.docker.com/r/devopscorner/laravel/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/total.svg)
 ![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.4/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/laravel-eks-deployment.svg)
