@@ -14,6 +14,8 @@ ENV IMG_ARCH="amd64/x86_64"
 
 ENV PHPFPM_VERSION=8.1-alpine3.16
 ENV ALPINE_VERSION=3.16
+ENV AWS_CLI_VERSION=2.9.1
+ENV VERIFY_CHECKSUM=false
 
 LABEL maintainer="$AUTHOR" \
     architecture="$IMG_ARCH" \
@@ -42,13 +44,71 @@ LABEL maintainer="$AUTHOR" \
 # Ensure PHP logs are captured by the container
 ENV LOG_CHANNEL=stderr
 
+USER root
+RUN apk add --no-cache \
+    build-base \
+    git \
+    bash \
+    curl \
+    jq \
+    wget \
+    ca-certificates \
+    openssl \
+    openssh \
+    openssh-server \
+    vim \
+    busybox-extras \
+    nano \
+    gcompat \
+    groff \
+    cmake \
+    zip \
+    unzip \
+    libffi-dev \
+    bzip2-dev \
+    python3 \
+    python3-dev \
+    py3-pip &&\
+    set -ex; sync
+
+# =================== #
+#  Install AWSCli v2  #
+# =================== #
+# RUN curl -s https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip &&\
+#       unzip awscliv2.zip &&\
+#       ./aws/install; sync
+COPY --from=devopscorner/aws-cli:latest /usr/local/aws-cli/ /usr/local/aws-cli/
+COPY --from=devopscorner/aws-cli:latest /usr/local/bin/ /usr/local/bin/
+
+# ========================= #
+# Install Python Libraries  #
+# ========================= #
+RUN python3 -m pip install pip &&\
+    pip3 install --upgrade pip==22.3.1 cffi &&\
+    pip3 install --no-cache-dir \
+    PyYaml \
+    Jinja2 \
+    httplib2 \
+    six \
+    requests \
+    boto3 &&\
+    # setup root .ssh directory
+    mkdir -p /root/.ssh &&\
+    chmod 0700 /root/.ssh &&\
+    chown -R root. /root/.ssh; sync
+
 # Copy code and run composer
 RUN mkdir -p /usr/share/nginx/laravel
 COPY src /usr/share/nginx/laravel
 RUN cd /usr/share/nginx/laravel && \
-    rm -f composer.lock && \
-    rm -rf vendor && \
-    composer install --no-dev; sync
+   rm -f composer.lock && \
+   rm -rf vendor && \
+   composer install --no-dev; sync
+
+# ============= #
+#  Cleanup All  #
+# ============= #
+RUN rm -rf /var/cache/apk/* /root/.cache /tmp/*
 
 # Set a volume mount point for your code
 VOLUME /usr/share/nginx/laravel
