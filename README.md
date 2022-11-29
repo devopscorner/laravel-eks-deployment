@@ -23,7 +23,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 | Container  | Pulls |
 |------------|------|
 | Container `devopscorner/phpfpm` [Tags](docs/README-PHPFpm.md) | [![phpfpm pulls](https://img.shields.io/docker/pulls/devopscorner/phpfpm.svg?label=phpfpm%20pulls&logo=php)](https://hub.docker.com/r/devopscorner/phpfpm/) |
-| Container `devopscorner/laravel` [Tags](docs/README-Laravel.md) | [![laravel pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=laravel%20pulls&logo=laravel)](https://hub.docker.com/r/devopscorner/laravel/) |
+| Container `devopscorner/laravel` [Tags](docs/README-OpenFortiVPN.md) | [![laravel pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=laravel%20pulls&logo=laravel)](https://hub.docker.com/r/devopscorner/laravel/) |
 
 ---
 
