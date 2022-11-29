@@ -95,14 +95,14 @@ services:
 # LARAVEL
 #================================================================================================
   laravel:
-  # image: devopscorner/laravel:${LARAVEL_K8S_VERSION:-latest}
+  # image: devopscorner/laravel:${LARAVEL_VERSION:-latest}
     build:
       context: .
       dockerfile: Dockerfile
     container_name: ${CONTAINER_LARAVEL:-devopscorner_laravel}
     links:
       - mariadb
-    restart: unless-stopped
+    restart: always
     hostname: mylaravel
     ports:
       - "${PORT_LARAVEL:-8000}:9000"
@@ -172,8 +172,9 @@ services:
 # NGINX ALPINE
 #================================================================================================
   nginx:
-    image: nginx:${NGINX_VERSION:-1.23-alpine}
-    container_name: ${CONTAINER_CICD_ALPINE:-devopscorner_nginx}
+    image: devopscorner/cicd:${CICD_VERSION:-1.23-alpine}
+    # image: nginx:${NGINX_VERSION:-1.23-alpine}
+    container_name: ${CONTAINER_NGINX_ALPINE:-devopscorner_nginx}
     restart: always
     links:
       - laravel
