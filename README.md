@@ -5,7 +5,7 @@
 [![phpfpm pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=phpfpm%20container&logo=php)](https://hub.docker.com/r/devopscorner/phpfpm/)
 [![laravel pulls](https://img.shields.io/docker/pulls/devopscorner/laravel.svg?label=laravel%20container&logo=laravel)](https://hub.docker.com/r/devopscorner/laravel/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.3/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/laravel-eks-deployment/1.4/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/laravel-eks-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://raw.githubusercontent.com/devopscorner/laravel-eks-deployment/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/laravel-eks-deployment)
