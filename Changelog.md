@@ -17,6 +17,13 @@ Laravel Kubernetes (EKS) Deployment Tools
 
 ---
 
+## Version 1.4
+
+- Refactoring laravel container with additional installation packages & libraries
+- Added AWS-Cli v2 binary
+
+---
+
 ## Version 1.3
 
 - Revert phpfpm setup listening port to 9000 (default)
