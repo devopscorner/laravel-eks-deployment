@@ -46,12 +46,16 @@ ENV LOG_CHANNEL=stderr
 
 USER root
 RUN apk add --no-cache \
-    build-base \
     git \
-    bash \
     curl \
+    zip \
+    unzip \
+    wget; sync
+
+RUN apk add --no-cache \
+    build-base \
+    bash \
     jq \
-    wget \
     ca-certificates \
     openssl \
     openssh \
@@ -62,8 +66,6 @@ RUN apk add --no-cache \
     gcompat \
     groff \
     cmake \
-    zip \
-    unzip \
     libffi-dev \
     bzip2-dev \
     python3 \
@@ -75,8 +77,8 @@ RUN apk add --no-cache \
 #  Install AWSCli v2  #
 # =================== #
 # RUN curl -s https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip &&\
-#       unzip awscliv2.zip &&\
-#       ./aws/install; sync
+#       unzip awscliv2.zip; sync &&\
+#       ./aws/install --bin-dir /usr/local/bin/; sync
 COPY --from=devopscorner/aws-cli:latest /usr/local/aws-cli/ /usr/local/aws-cli/
 COPY --from=devopscorner/aws-cli:latest /usr/local/bin/ /usr/local/bin/
 
