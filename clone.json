@@ -1,5 +1,5 @@
 {
-  "count": 256,
+  "count": 259,
   "uniques": 40,
   "clones": [
     {
@@ -64,8 +64,8 @@
     },
     {
       "timestamp": "2022-12-01T00:00:00Z",
-      "count": 4,
-      "uniques": 3
+      "count": 7,
+      "uniques": 4
     }
   ]
 }
