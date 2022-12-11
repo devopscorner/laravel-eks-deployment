@@ -33,3 +33,49 @@ Laravel Kubernetes (EKS) Deployment Tools
   - [Core Infrastructure Prod](terraform-state-core-infra-prod.md)
   - [EKS Staging](terraform-state-eks-staging.md)
   - [EKS Production](terraform-state-eks-prod.md)
+
+- Terraform Docs Generator with `terraform-docs`, download [this](https://github.com/terraform-docs/terraform-docs/) binary
+  - [Terraform Infra Core](README-Terraform-Infra-Core.md)
+    ```
+    cd terraform/environment/providers/aws/infra/core
+
+    touch ../../../../../../docs/README-Terraform-Infra-Core.md
+
+    terraform-docs markdown table --output-file ../../../../../../docs/README-Terraform-Infra-Core.md --output-mode inject .
+    ```
+
+  - [Terraform Infra TFState](README-Terraform-Infra-TFState.md)
+    ```
+    cd terraform/environment/providers/aws/infra/tfstate
+
+    touch ../../../../../../docs/README-Terraform-Infra-TFState.md
+
+    terraform-docs markdown table --output-file ../../../../../../docs/README-Terraform-Infra-TFState.md --output-mode inject .
+    ```
+
+  - [Terraform Infra Resources Budget](README-Terraform-Infra-Resources-Budget.md)
+    ```
+    cd terraform/environment/providers/aws/infra/resources/budget
+
+    touch ../../../../../../../docs/README-Terraform-Infra-Resources-Budget.md
+
+    terraform-docs markdown table --output-file ../../../../../../../docs/README-Terraform-Infra-Resources-Budget.md --output-mode inject .
+    ```
+
+  - [Terraform Infra Resources EKS Laravel](README-Terraform-Infra-Resources-EKS-Laravel.md)
+    ```
+    cd terraform/environment/providers/aws/infra/resources/eks
+
+    touch ../../../../../../../docs/README-Terraform-Infra-Resources-EKS-Laravel.md
+
+    terraform-docs markdown table --output-file ../../../../../../../docs/README-Terraform-Infra-Resources-EKS-Laravel.md --output-mode inject .
+    ```
+
+  - [Terraform Infra Resources RDS LaravelDB](README-Terraform-Infra-Resources-RDS-LaravelDB.md)
+    ```
+    cd terraform/environment/providers/aws/infra/resources/rds/laraveldb
+
+    touch ../../../../../../../../docs/README-Terraform-Infra-Resources-RDS-LaravelDB.md
+
+    terraform-docs markdown table --output-file ../../../../../../../../docs/README-Terraform-Infra-Resources-RDS-LaravelDB.md --output-mode inject .
+    ```

@@ -123,11 +123,9 @@ Teraform AWS Providers, eg:
   git clone git@github.com:devopscorner/laravel-eks-deployment.git
   ```
 
-- Pull Submodule repository
+- Get all Terraform modules
 
   ```
-  git submodule update --init --recursive
-  -- or --
   make sub-all
   ```
 
