@@ -17,10 +17,12 @@ Laravel Kubernetes (EKS) Deployment Tools
 
 ---
 
-## Version 1.4
+## Version 1.5.0
 
-- Refactoring laravel container with additional installation packages & libraries
-- Added AWS-Cli v2 binary
+- All features from version 1.4
+- Added docs from `terraform-docs` generator
+- Refactoring script dockerhub-build, dockerhub-tag, dockerhub-push
+- Refactoring script ecr-build, ecr-tag, ecr-push
 
 ---
 
@@ -47,7 +49,6 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Added docker-compose container hostname
 - Added healthcheck for phpfpm container in port 8000
 - Change docker configuration laravel to `devopscorner/laravel`
-
 
 ---
 

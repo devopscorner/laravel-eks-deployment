@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 #================================================================================================
 # NETWORK SETUP
@@ -47,18 +47,18 @@ volumes:
       device: ${DATA_NGINX:-/opt/data/docker/nginx-alpine}
 
 services:
-#================================================================================================
-# ADMINER
-#================================================================================================
+  #================================================================================================
+  # ADMINER
+  #================================================================================================
   adminer:
     image: dockerframework/adminer:${ADMINER_VERSION:-4.8.1}
     container_name: ${CONTAINER_ADMINER:-devopscorner_adminer}
-    restart: unless-stopped
+    restart: always
     ports:
       - "${PORT_ADMINER:-5210}:8080"
     volumes:
-  #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-  #   - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+      # - /etc/localtime:/etc/localtime:ro        ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
       - vol_adminer:/sessions
     environment:
       - TZ="Asia/Jakarta"
@@ -69,19 +69,19 @@ services:
       devopscorner_net:
         ipv4_address: ${CONTAINER_IP_ADMINER:-172.150.150.200}
 
-#================================================================================================
-# PORTAINER
-#================================================================================================
+  #================================================================================================
+  # PORTAINER
+  #================================================================================================
   portainer:
     image: dockerframework/portainer:${PORTAINER_VERSION:-2.9.0}
     container_name: ${CONTAINER_PORTAINER:-devopscorner_portainer}
-    restart: unless-stopped
+    restart: always
     hostname: myportainer
     ports:
       - "${PORT_PORTAINER:-5213}:9000"
     volumes:
-  #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-      - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+      # - /etc/localtime:/etc/localtime:ro        ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
       - vol_portainer:/data
     environment:
       - PORTAINER_TEMPLATE=generic
@@ -91,11 +91,11 @@ services:
       devopscorner_net:
         ipv4_address: ${CONTAINER_IP_PORTAINER:-172.150.150.201}
 
-#================================================================================================
-# LARAVEL
-#================================================================================================
+  #================================================================================================
+  # LARAVEL
+  #================================================================================================
   laravel:
-  # image: devopscorner/laravel:${LARAVEL_VERSION:-latest}
+    # image: devopscorner/laravel:${LARAVEL_VERSION:-latest}
     build:
       context: .
       dockerfile: Dockerfile
@@ -107,8 +107,8 @@ services:
     ports:
       - "${PORT_LARAVEL:-8000}:9000"
     volumes:
-  #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-      - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+      # - /etc/localtime:/etc/localtime:ro        ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
     environment:
       - TZ="Asia/Jakarta"
       - PHP_VERSION=${PHP_VERSION:-8.1}
@@ -132,22 +132,22 @@ services:
       devopscorner_net:
         ipv4_address: ${CONTAINER_IP_LARAVEL:-172.150.150.205}
 
-#================================================================================================
-# MARIADB
-#================================================================================================
+  #================================================================================================
+  # MARIADB
+  #================================================================================================
   mariadb:
     image: mariadb:${MARIADB_VERSION:-10.5.12}
-  # build:
-  #   context: ./compose/docker/ubuntu-mariadb
-  #   dockerfile: Dockerfile
+    # build:
+    #   context: ./compose/docker/ubuntu-mariadb
+    #   dockerfile: Dockerfile
     container_name: ${CONTAINER_MARIADB:-devopscorner_mariadb}
     restart: always
     hostname: mymariadb
     ports:
       - "${PORT_MARIADB:-3306}:3306"
     volumes:
-  #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-      - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+      # - /etc/localtime:/etc/localtime:ro        ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
       - vol_mariadb:/var/lib/mysql
       - ./compose/docker/ubuntu-mariadb/rootfs/etc/my.cnf:/etc/my.cnf
       - ./compose/docker/ubuntu-mariadb/rootfs/etc/my.cnf.d/mariadb-server.cnf:/etc/my.cnf.d/mariadb-server.cnf
@@ -161,16 +161,16 @@ services:
       - MYSQL_DATABASE=${MARIADB_DATABASE:-laravel_dev}
       - MYSQL_USER=${MARIADB_USER:-laravel_user}
       - MYSQL_PASSWORD=${MARIADB_PASSWORD:-secretpassword}
-  #   - SKIP_INNODB=1
+    # - SKIP_INNODB=1
     privileged: true
     tty: true
     networks:
       devopscorner_net:
         ipv4_address: ${CONTAINER_IP_MARIADB:-172.150.150.203}
 
-#================================================================================================
-# NGINX ALPINE
-#================================================================================================
+  #================================================================================================
+  # NGINX ALPINE
+  #================================================================================================
   nginx:
     image: devopscorner/cicd:${CICD_VERSION:-1.23-alpine}
     # image: nginx:${NGINX_VERSION:-1.23-alpine}
@@ -181,8 +181,8 @@ services:
     ports:
       - "${PORT_NGINX:-5250}:80"
     volumes:
-      #- /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-      - /var/run/docker.sock:/var/run/docker.sock   ## Do not use it in k8s
+      # - /etc/localtime:/etc/localtime:ro        ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
     environment:
       - TZ="Asia/Jakarta"
       - ALPINE_VERSION=${ALPINE_VERSION:-3.16}

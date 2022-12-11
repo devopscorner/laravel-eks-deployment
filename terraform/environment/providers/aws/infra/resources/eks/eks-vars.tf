@@ -58,7 +58,7 @@ variable "dns_url" {
 variable "eks_cluster_name" {
   type        = string
   description = "default cluster name"
-  default     = "devopscorner"
+  default     = "eks-laravel"
 }
 
 
