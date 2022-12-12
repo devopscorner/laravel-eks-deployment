@@ -23,6 +23,7 @@ Laravel Kubernetes (EKS) Deployment Tools
 - Added docs from `terraform-docs` generator
 - Refactoring script dockerhub-build, dockerhub-tag, dockerhub-push
 - Refactoring script ecr-build, ecr-tag, ecr-push
+- Refactoring makefile for running build, tag, push & pull
 
 ---
 

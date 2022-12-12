@@ -32,7 +32,6 @@ VERSION       ?= 1.3.0
 
 export BASE_IMAGE=ubuntu
 export BASE_VERSION=22.04
-
 export LARAVEL_VERSION=22.04
 export LARAVEL_VERSION=8.65
 
@@ -41,18 +40,18 @@ export LARAVEL_VERSION=8.65
 # =============== #
 .PHONY: sub-officials sub-community sub-all codebuild-modules
 sub-officials:
-	@echo "============================================================"
+	@echo "=============================================================="
 	@echo " Task      : Get Official Submodules "
 	@echo " Date/Time : `date` "
-	@echo "============================================================"
+	@echo "=============================================================="
 	@mkdir -p $(TF_MODULES)/officials
 	@cd $(PATH_APP) && ./get-officials.sh
 
 sub-community:
-	@echo "============================================================"
+	@echo "=============================================================="
 	@echo " Task      : Get Community Submodules "
 	@echo " Date/Time : `date` "
-	@echo "============================================================"
+	@echo "=============================================================="
 	@mkdir -p $(TF_MODULES)/community
 	@cd $(PATH_APP) && ./get-community.sh
 
@@ -65,10 +64,10 @@ sub-all:
 	@echo '- ALL DONE -'
 
 codebuild-modules:
-	@echo "============================================================"
+	@echo "=============================================================="
 	@echo " Task      : Get CodeBuild Modules "
 	@echo " Date/Time : `date` "
-	@echo "============================================================"
+	@echo "=============================================================="
 	@./get-modules-codebuild.sh
 
 # ==================== #
@@ -76,10 +75,10 @@ codebuild-modules:
 # ==================== #
 .PHONY: git-clone
 git-clone:
-	@echo "============================================================"
+	@echo "=============================================================="
 	@echo " Task      : Clone Repository Sources "
 	@echo " Date/Time : `date` "
-	@echo "============================================================"
+	@echo "=============================================================="
 	@./git-clone.sh $(SOURCE) $(TARGET)
 	@echo '- DONE -'
 
@@ -115,55 +114,84 @@ remove:
 #   BUILD CONTAINER APPLICATION   #
 # =============================== #
 .PHONY: dockerhub-build ecr-build
+
+# ./dockerhub-build.sh Dockerfile [DOCKERHUB_IMAGE_PATH] [alpine|ubuntu|codebuild] [version|latest|tags] [custom-tags]
 dockerhub-build:
 	@echo "========================================================"
 	@echo " Task      : Create Container Application Image "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@cd ${PATH_COMPOSE} && ./dockerhub-build.sh laravel Dockerfile ${LARAVEL_VERSION}
+	@sh ./dockerhub-build.sh Dockerfile $(CI_PATH) alpine ${LARAVEL_VERSION}
 
+# ./ecr-build.sh [AWS_ACCOUNT] Dockerfile [ECR_PATH] [alpine|ubuntu|codebuild] [version|latest|tags] [custom-tags]
 ecr-build:
 	@echo "========================================================"
 	@echo " Task      : Create Container Application Image "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@cd ${PATH_COMPOSE} && ./ecr-build.sh $(ARGS) laravel Dockerfile ${LARAVEL_VERSION}
+	@sh ./ecr-build.sh $(ARGS) Dockerfile $(CI_PATH) alpine ${LARAVEL_VERSION}
 
 # ============================== #
 #   TAGS CONTAINER APPLICATION   #
 # ============================== #
 .PHONY: tag-dockerhub tag-ecr
+
+# ./dockerhub-tag.sh [DOCKERHUB_IMAGE_PATH] [alpine|ubuntu] [version|latest|tags] [custom-tags]
 dockerhub-tag:
 	@echo "========================================================"
 	@echo " Task      : Set Tags Image Application to DockerHub "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@cd ${PATH_COMPOSE} && ./dockerhub-tag.sh laravel ${LARAVEL_VERSION}
+	@sh ./dockerhub-tag.sh $(CI_PATH) alpine ${LARAVEL_VERSION}
 
+# ./ecr-tag.sh [AWS_ACCOUNT] [ECR_PATH] [alpine|ubuntu] [version|latest|tags] [custom-tags]
 ecr-tag:
 	@echo "========================================================"
 	@echo " Task      : Set Tags Image Application to ECR "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@cd ${PATH_COMPOSE} && ./ecr-tag.sh $(ARGS) laravel ${LARAVEL_VERSION} $(CI_PATH)
+	@sh ./ecr-tag.sh $(ARGS) $(CI_PATH) alpine ${LARAVEL_VERSION}
 
 # ============================== #
 #   PUSH CONTAINER APPLICATION   #
 # ============================== #
 .PHONY: dockerhub-push ecr-push
+
+# ./dockerhub-push.sh [DOCKERHUB_IMAGE_PATH] [alpine|ubuntu|version|latest|tags|custom-tags]
 dockerhub-push:
 	@echo "========================================================"
 	@echo " Task      : Push Image Application to DockerHub "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@cd ${PATH_COMPOSE} && ./dockerhub-push.sh laravel $(CI_PATH)
+	@sh ./dockerhub-push.sh $(CI_PATH) alpine
+	@sh ./dockerhub-push.sh $(CI_PATH) latest
+	@sh ./dockerhub-push.sh $(CI_PATH) ${LARAVEL_VERSION}
 
+# ./ecr-push.sh [AWS_ACCOUNT] [ECR_PATH] [alpine|ubuntu|version|latest|tags|custom-tags]
 ecr-push:
 	@echo "========================================================"
 	@echo " Task      : Push Image Application to ECR "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@cd ${PATH_COMPOSE} && ./ecr-push.sh $(ARGS) laravel $(CI_PATH)
+	@sh ./ecr-push.sh $(ARGS) $(CI_PATH) alpine
+	@sh ./ecr-push.sh $(CI_PATH) latest
+	@sh ./ecr-push.sh $(CI_PATH) ${LARAVEL_VERSION}
+
+# ============================== #
+#   PULL CONTAINER APPLICATION   #
+# ============================== #
+.PHONY: ecr-pull
+
+# ./ecr-pull.sh [AWS_ACCOUNT] [ECR_PATH] [alpine|ubuntu|codebuild|version|latest|tags|custom-tags]
+ecr-pull:
+	@echo "=============================================================="
+	@echo " Task      : Pull Container Image from ECR "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@sh ./ecr-pull.sh $(ARGS) $(CI_PATH) alpine
+	@sh ./ecr-pull.sh $(ARGS) $(CI_PATH) latest
+	@sh ./ecr-pull.sh $(ARGS) $(CI_PATH) ${LARAVEL_VERSION}
+	@echo '- DONE -'
 
 # =================== #
 #   HELM REPOSITORY   #
