@@ -26,9 +26,9 @@ export CI_REGISTRY     ?= $(ARGS).dkr.ecr.ap-southeast-1.amazonaws.com
 export CI_PROJECT_PATH ?= devopscorner
 export CI_PROJECT_NAME ?= laravel
 
-IMAGE          = $(CI_REGISTRY)/${CI_PROJECT_PATH}/${PROJECT_NAME}
-DIR            = $(shell pwd)
-VERSION       ?= 1.3.0
+IMAGE   = $(CI_REGISTRY)/${CI_PROJECT_PATH}/${PROJECT_NAME}
+DIR     = $(shell pwd)
+VERSION ?= 1.3.0
 
 export BASE_IMAGE=ubuntu
 export BASE_VERSION=22.04
@@ -211,4 +211,96 @@ helm-push-lab:
 	@echo " Date/Time : `date`"
 	@echo "=============================================================="
 	@cd ${PATH_HELM} && ./helm-push-lab.sh
+	@echo '- DONE -'
+
+# =========================== #
+#   PROVISIONING INFRA CORE   #
+# =========================== #
+.PHONY: tf-core-init tf-core-create-workspace tf-core-select-workspace tf-core-plan tf-core-apply
+tf-core-init:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Init "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_CORE) && terraform init $(ARGS)
+	@echo '- DONE -'
+tf-core-create-workspace:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Create Workspace "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_CORE) && terraform workspace new $(ARGS)
+	@echo '- DONE -'
+tf-core-select-workspace:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Select Workspace "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_CORE) && terraform workspace select $(ARGS)
+	@echo '- DONE -'
+tf-core-plan:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Plan Provisioning "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_CORE) && terraform plan $(ARGS)
+	@echo '- DONE -'
+tf-core-apply:
+	@echo "=============================================================="
+	@echo " Task      : Provisioning Terraform "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_CORE) && terraform apply -auto-approve
+	@echo '- DONE -'
+
+# ================================ #
+#   PROVISIONING RESOURCES INFRA   #
+# ================================ #
+.PHONY: tf-infra-init tf-infra-create-workspace tf-infra-select-workspace tf-infra-plan tf-infra-apply tf-infra-resource
+tf-infra-init:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Init "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_RESOURCES)/$(INFRA_RESOURCES) && terraform init $(ARGS)
+	@echo '- DONE -'
+tf-infra-create-workspace:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Create Workspace "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_RESOURCES)/$(INFRA_RESOURCES) && terraform workspace new $(ARGS)
+	@echo '- DONE -'
+tf-infra-select-workspace:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Select Workspace "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_RESOURCES)/$(INFRA_RESOURCES) && terraform workspace select $(ARGS)
+	@echo '- DONE -'
+tf-infra-plan:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Plan Provisioning "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_RESOURCES)/$(INFRA_RESOURCES) && terraform plan $(ARGS)
+	@echo '- DONE -'
+tf-infra-apply:
+	@echo "=============================================================="
+	@echo " Task      : Provisioning Terraform "
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_RESOURCES)/$(INFRA_RESOURCES) && terraform apply -auto-approve $(ARGS)
+	@echo '- DONE -'
+
+# =============================== #
+#   PROVISIONING SPESIFIC INFRA   #
+# =============================== #
+.PHONY: tf-infra-resource
+tf-infra-resource:
+	@echo "=============================================================="
+	@echo " Task      : Terraform Command $(ARGS)"
+	@echo " Date/Time : `date` "
+	@echo "=============================================================="
+	@cd $(TF_RESOURCES)/$(INFRA_RESOURCES) && terraform $(ARGS)
 	@echo '- DONE -'
