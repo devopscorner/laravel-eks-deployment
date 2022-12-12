@@ -87,26 +87,26 @@ git-clone:
 # ================== #
 .PHONY: run stop remove
 run:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Docker Container "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@./run-docker.sh
 	@echo '- DONE -'
 
 stop:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Stopping Docker Container "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@docker-compose -f ${PATH_COMPOSE}/docker-compose.yml stop
 	@echo '- DONE -'
 
 remove:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Remove Docker Container "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@docker-compose -f ${PATH_COMPOSE}/docker-compose.yml down
 	@echo '- DONE -'
 
@@ -117,18 +117,18 @@ remove:
 
 # ./dockerhub-build.sh Dockerfile [DOCKERHUB_IMAGE_PATH] [alpine|ubuntu|codebuild] [version|latest|tags] [custom-tags]
 dockerhub-build:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Create Container Application Image "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@sh ./dockerhub-build.sh Dockerfile $(CI_PATH) alpine ${LARAVEL_VERSION}
 
 # ./ecr-build.sh [AWS_ACCOUNT] Dockerfile [ECR_PATH] [alpine|ubuntu|codebuild] [version|latest|tags] [custom-tags]
 ecr-build:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Create Container Application Image "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@sh ./ecr-build.sh $(ARGS) Dockerfile $(CI_PATH) alpine ${LARAVEL_VERSION}
 
 # ============================== #
@@ -138,18 +138,18 @@ ecr-build:
 
 # ./dockerhub-tag.sh [DOCKERHUB_IMAGE_PATH] [alpine|ubuntu] [version|latest|tags] [custom-tags]
 dockerhub-tag:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Set Tags Image Application to DockerHub "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@sh ./dockerhub-tag.sh $(CI_PATH) alpine ${LARAVEL_VERSION}
 
 # ./ecr-tag.sh [AWS_ACCOUNT] [ECR_PATH] [alpine|ubuntu] [version|latest|tags] [custom-tags]
 ecr-tag:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Set Tags Image Application to ECR "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@sh ./ecr-tag.sh $(ARGS) $(CI_PATH) alpine ${LARAVEL_VERSION}
 
 # ============================== #
@@ -159,20 +159,20 @@ ecr-tag:
 
 # ./dockerhub-push.sh [DOCKERHUB_IMAGE_PATH] [alpine|ubuntu|version|latest|tags|custom-tags]
 dockerhub-push:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Push Image Application to DockerHub "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@sh ./dockerhub-push.sh $(CI_PATH) alpine
 	@sh ./dockerhub-push.sh $(CI_PATH) latest
 	@sh ./dockerhub-push.sh $(CI_PATH) ${LARAVEL_VERSION}
 
 # ./ecr-push.sh [AWS_ACCOUNT] [ECR_PATH] [alpine|ubuntu|version|latest|tags|custom-tags]
 ecr-push:
-	@echo "========================================================"
+	@echo "=============================================================="
 	@echo " Task      : Push Image Application to ECR "
 	@echo " Date/Time : `date`"
-	@echo "========================================================"
+	@echo "=============================================================="
 	@sh ./ecr-push.sh $(ARGS) $(CI_PATH) alpine
 	@sh ./ecr-push.sh $(CI_PATH) latest
 	@sh ./ecr-push.sh $(CI_PATH) ${LARAVEL_VERSION}
@@ -198,17 +198,17 @@ ecr-pull:
 # =================== #
 .PHONY: helm-pack-lab helm-push-lab
 helm-pack-lab:
-	@echo "============================================"
+	@echo "=============================================================="
 	@echo " Task      : Packing HelmChart "
 	@echo " Date/Time : `date`"
-	@echo "============================================"
+	@echo "=============================================================="
 	@cd ${PATH_HELM} && ./helm-pack-lab.sh
 	@echo '- DONE -'
 
 helm-push-lab:
-	@echo "============================================"
+	@echo "=============================================================="
 	@echo " Task      : PUSH HelmChart "
 	@echo " Date/Time : `date`"
-	@echo "============================================"
+	@echo "=============================================================="
 	@cd ${PATH_HELM} && ./helm-push-lab.sh
 	@echo '- DONE -'
