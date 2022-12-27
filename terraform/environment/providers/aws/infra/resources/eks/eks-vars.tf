@@ -25,7 +25,7 @@ variable "region" {
 variable "access_my_ip" {
   type        = string
   description = "Your IP Address"
-  default     = "118.136.0.0/16"
+  default     = "118.136.0.0/22"
 }
 
 # ------------------------------------
@@ -58,7 +58,7 @@ variable "dns_url" {
 variable "eks_cluster_name" {
   type        = string
   description = "default cluster name"
-  default     = "eks-laravel"
+  default     = "laravel"
 }
 
 
