@@ -21,8 +21,7 @@ locals {
 resource "aws_eks_node_group" "devops" {
   ## NODE GROUP
   for_each = toset([
-    "monitoring",
-    "tools",
+    "monitoring"
   ])
 
   cluster_name    = aws_eks_cluster.aws_eks.name
@@ -54,7 +53,7 @@ resource "aws_eks_node_group" "devops" {
   }
 
   scaling_config {
-    desired_size = 1
+    desired_size = 2
     max_size     = 5
     min_size     = 1
   }
@@ -75,7 +74,7 @@ resource "aws_eks_node_group" "devops" {
     },
     {
       Environment     = "${upper(each.key)}"
-      Name            = "EKS-1.22-${upper(local.node_selector_devops)}-${upper(each.key)}"
+      Name            = "EKS-${var.k8s_version[local.env]}-${upper(local.node_selector_devops)}-${upper(each.key)}"
       Type            = "PRODUCTS"
       ProductName     = "EKS-DEVOPSCORNER"
       ProductGroup    = "${upper(each.key)}-EKS-DEVOPSCORNER"
@@ -101,7 +100,6 @@ resource "aws_eks_node_group" "devops" {
 resource "aws_lb_target_group" "devops" {
   for_each = toset([
     "monitoring",
-    "tools"
   ])
 
   name     = "tg-${local.node_selector_devops}-${var.env[local.env]}-${each.key}"
@@ -131,20 +129,10 @@ output "eks_node_name_devops_monitoring" {
   value = aws_eks_node_group.devops["monitoring"].id
 }
 
-## Tools Output #
-output "eks_node_name_devops_tools" {
-  value = aws_eks_node_group.devops["tools"].id
-}
-
 # --------------------------------------------------------------------------
 #  Target Group Output
 # --------------------------------------------------------------------------
 ## Monitoring TargetGroup Output ##
 output "eks_node_tg_devops_monitoring" {
   value = aws_lb_target_group.devops["monitoring"].id
-}
-
-## Tools TargetGroup Output ##
-output "eks_node_tg_devops_tools" {
-  value = aws_lb_target_group.devops["tools"].id
 }

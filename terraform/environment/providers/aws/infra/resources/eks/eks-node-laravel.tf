@@ -33,7 +33,7 @@ resource "aws_eks_node_group" "laravel" {
     data.terraform_remote_state.core_state.outputs.eks_private_1c[0]
   ]
 
-  instance_types = local.env == "prod" ? ["m5.large"] : ["t3.medium"]
+  instance_types = local.env == "prod" ? ["t3.large"] : ["t3.medium"]
   disk_size      = 100
   version        = var.k8s_version[local.env]
 
@@ -72,7 +72,7 @@ resource "aws_eks_node_group" "laravel" {
     },
     {
       Environment     = "${upper(each.key)}"
-      Name            = "EKS-1.22-${upper(local.node_selector_laravel)}-${upper(each.key)}"
+      Name            = "EKS-${var.k8s_version[local.env]}-${upper(local.node_selector_laravel)}-${upper(each.key)}"
       Type            = "PRODUCTS"
       ProductName     = "EKS-DEVOPSCORNER"
       ProductGroup    = "${upper(each.key)}-EKS-DEVOPSCORNER"
@@ -121,34 +121,34 @@ resource "aws_lb_target_group" "laravel" {
 #  Node Group Output
 # --------------------------------------------------------------------------
 ## DEV Output ##
-output "eks_node_name_laravel_dev" {
-  value = aws_eks_node_group.laravel["dev"].id
-}
+# output "eks_node_name_laravel_dev" {
+#   value = aws_eks_node_group.laravel["dev"].id
+# }
 
 ## UAT Output ##
-output "eks_node_name_laravel_uat" {
-  value = aws_eks_node_group.laravel["uat"].id
-}
+# output "eks_node_name_laravel_uat" {
+#   value = aws_eks_node_group.laravel["uat"].id
+# }
 
 ## PROD Output ##
-# output "eks_node_name_laravel_prod" {
-#   value = aws_eks_node_group.laravel["prod"].id
-# }
+output "eks_node_name_laravel_prod" {
+  value = aws_eks_node_group.laravel["prod"].id
+}
 
 # --------------------------------------------------------------------------
 #  Target Group Output
 # --------------------------------------------------------------------------
 ## DEV Output ##
-output "eks_node_tg_laravel_dev" {
-  value = aws_lb_target_group.laravel["dev"].id
-}
+# output "eks_node_tg_laravel_dev" {
+#   value = aws_lb_target_group.laravel["dev"].id
+# }
 
-## UAT Output ##
-output "eks_node_tg_laravel_uat" {
-  value = aws_lb_target_group.laravel["uat"].id
-}
+# ## UAT Output ##
+# output "eks_node_tg_laravel_uat" {
+#   value = aws_lb_target_group.laravel["uat"].id
+# }
 
 ## PROD Output ##
-# output "eks_node_tg_laravel_prod" {
-#   value = aws_lb_target_group.laravel["prod"].id
-# }
+output "eks_node_tg_laravel_prod" {
+  value = aws_lb_target_group.laravel["prod"].id
+}
