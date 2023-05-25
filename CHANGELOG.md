@@ -17,6 +17,14 @@ Laravel Kubernetes (EKS) Deployment Tools
 
 ---
 
+## Version 1.6.0
+
+- All features from version 1.5
+- Update Laravel version to 10.x from 9.x
+- Update dockerfile configuration for Laravel 10.x
+
+---
+
 ## Version 1.5.0
 
 - All features from version 1.4
