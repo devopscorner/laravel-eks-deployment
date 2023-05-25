@@ -8,8 +8,8 @@ ARG GIT_URL
 ENV VENDOR="DevOpsCorner.id"
 ENV AUTHOR="Dwi Fahni Denni <support@devopscorner.id>"
 ENV IMG_NAME="phpfpm"
-ENV IMG_VERSION="8.0"
-ENV IMG_DESC="Docker Image Alpine PHP-Fpm 8.0"
+ENV IMG_VERSION="8.2"
+ENV IMG_DESC="Docker Image Alpine PHP-Fpm 8.2"
 ENV IMG_ARCH="amd64/x86_64"
 
 LABEL Maintainer="DevOpsCorner Indonesia <support@devopscorner.id>" \
