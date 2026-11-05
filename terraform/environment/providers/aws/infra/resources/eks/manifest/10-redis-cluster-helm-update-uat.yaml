@@ -42,8 +42,8 @@ image:
   pullPolicy: IfNotPresent
   pullSecrets: []
   registry: docker.io
-  repository: bitnami/redis
-  tag: 6.2.6-debian-10-r146
+  repository: soldevelo/redis
+  tag: 6.2.16-debian-12-r0
 kubeVersion: ""
 master:
   affinity: {}
